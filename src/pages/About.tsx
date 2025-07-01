@@ -1,9 +1,9 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ScrollReveal from '../components/ScrollReveal';
+import Footer from '../components/Footer';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Moon, Star, Sun, Sparkles, BookOpen, Users, Award, Heart } from 'lucide-react';
@@ -252,6 +252,8 @@ const About = () => {
           </Link>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };

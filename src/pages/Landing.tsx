@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ScrollReveal from '../components/ScrollReveal';
+import Footer from '../components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Moon, Star, Sun } from 'lucide-react';
+
 gsap.registerPlugin(ScrollTrigger);
 
 // Declare the spline-viewer as a custom element
@@ -18,6 +20,7 @@ declare global {
     }
   }
 }
+
 const Landing = () => {
   const starsRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
@@ -142,6 +145,9 @@ const Landing = () => {
           "When the student is ready, the teacher appears. When the seeker is sincere, the stars reveal their secrets."
         </ScrollReveal>
       </div>
+
+      <Footer />
     </div>;
 };
+
 export default Landing;
