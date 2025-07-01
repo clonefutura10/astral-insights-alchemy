@@ -76,25 +76,51 @@ const About = () => {
       <div className="relative z-10 container mx-auto px-6 py-20 pt-32">
         {/* About Section */}
         <section className="about-section mb-20">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center about-title">
-            <Sparkles className="inline-block mr-2 text-yellow-400" />
+          <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center about-title">
+            <Sparkles className="inline-block mr-3 text-yellow-400" />
             About Pandit Pradeep Kiradoo
           </h2>
           
-          <div className="max-w-4xl mx-auto">
-            <ScrollReveal baseOpacity={0.3} enableBlur={true} baseRotation={1} blurStrength={3} containerClassName="mb-8">
-              <div className="text-center text-lg text-gray-300 leading-relaxed">
-                A renowned Vedic astrologer with over 15 years of experience in Jyotish Shastra, 
-                combining ancient wisdom with modern insights to guide individuals toward fulfillment and prosperity.
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              {/* Main Description Card */}
+              <div className="md:col-span-2">
+                <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-8 h-full hover:bg-white/10 transition-all duration-300">
+                  <ScrollReveal baseOpacity={0.3} enableBlur={true} baseRotation={1} blurStrength={2} containerClassName="mb-6">
+                    <p className="text-lg text-gray-200 leading-relaxed mb-6">
+                      Pandit Pradeep Kiradoo is a renowned Vedic astrologer with over 15 years of experience in Jyotish Shastra. His deep understanding of planetary influences and their impact on human life has guided countless individuals towards a more fulfilling and prosperous existence.
+                    </p>
+                  </ScrollReveal>
+                  
+                  <ScrollReveal baseOpacity={0.3} enableBlur={true} baseRotation={1} blurStrength={2} containerClassName="mb-6">
+                    <p className="text-base text-gray-300 leading-relaxed mb-6">
+                      With a compassionate approach, he combines ancient wisdom with modern techniques to provide personalized astrological consultations. His expertise lies in analyzing birth charts, predicting future events, and offering effective remedies to mitigate challenges.
+                    </p>
+                  </ScrollReveal>
+                  
+                  <ScrollReveal baseOpacity={0.3} enableBlur={true} baseRotation={1} blurStrength={2}>
+                    <p className="text-base text-gray-300 leading-relaxed">
+                      Pandit Pradeep Kiradoo is dedicated to empowering individuals with the knowledge of their cosmic potential, helping them make informed decisions and navigate life's journey with confidence and clarity.
+                    </p>
+                  </ScrollReveal>
+                </Card>
               </div>
-            </ScrollReveal>
-            
-            <ScrollReveal baseOpacity={0.3} enableBlur={true} baseRotation={1} blurStrength={3} containerClassName="mb-8">
-              <div className="text-center text-base text-gray-400 leading-relaxed max-w-3xl mx-auto">
-                Specializing in birth chart analysis, future predictions, and personalized remedies, 
-                Pandit Kiradoo empowers clients with cosmic insights for confident decision-making.
+              
+              {/* Highlight Card */}
+              <div className="space-y-6">
+                <Card className="bg-gradient-to-br from-purple-500/10 to-blue-500/10 backdrop-blur-md border border-purple-300/20 p-6 text-center hover:transform hover:scale-105 transition-all duration-300">
+                  <Star className="w-12 h-12 text-yellow-400 mb-4 mx-auto" />
+                  <h3 className="text-xl font-semibold mb-3 text-white">15+ Years</h3>
+                  <p className="text-sm text-gray-300">of dedicated practice in Vedic Astrology</p>
+                </Card>
+                
+                <Card className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 backdrop-blur-md border border-yellow-300/20 p-6 text-center hover:transform hover:scale-105 transition-all duration-300">
+                  <Heart className="w-12 h-12 text-pink-400 mb-4 mx-auto" />
+                  <h3 className="text-xl font-semibold mb-3 text-white">Compassionate</h3>
+                  <p className="text-sm text-gray-300">approach to spiritual guidance</p>
+                </Card>
               </div>
-            </ScrollReveal>
+            </div>
           </div>
         </section>
 
