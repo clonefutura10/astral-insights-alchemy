@@ -4,6 +4,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ScrollReveal from '../components/ScrollReveal';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Moon, Star, Sun } from 'lucide-react';
@@ -52,33 +53,27 @@ const Landing = () => {
       });
     }
   }, []);
-  return <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white overflow-hidden">
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white overflow-hidden">
+      <Header />
+      
       {/* Floating Stars Background */}
       <div ref={starsRef} className="fixed inset-0 pointer-events-none z-0">
-        {[...Array(50)].map((_, i) => <div key={i} className="absolute w-1 h-1 bg-yellow-200 rounded-full animate-pulse" style={{
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-        animationDelay: `${Math.random() * 3}s`
-      }} />)}
+        {[...Array(50)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-yellow-200 rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`
+            }}
+          />
+        ))}
       </div>
 
-      {/* Navigation */}
-      <nav className="relative z-20 p-6 flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-          <Moon className="w-8 h-8 text-yellow-400" />
-          <span className="text-2xl font-bold bg-gradient-to-r from-yellow-400 to-purple-400 bg-clip-text text-transparent">
-            Pandit Pradeep Kiradoo
-          </span>
-        </div>
-        <div className="space-x-6">
-          <Link to="/" className="hover:text-yellow-400 transition-colors">Home</Link>
-          <Link to="/about" className="hover:text-yellow-400 transition-colors">About</Link>
-          <Link to="/consultation" className="hover:text-yellow-400 transition-colors">Consultation</Link>
-        </div>
-      </nav>
-
-      {/* Hero Section with 3D Model */}
-      <div className="relative z-10 container mx-auto px-6 py-10 my-[150px]">
+      {/* Hero Section with 3D Model - Added pt-20 for header spacing */}
+      <div className="relative z-10 container mx-auto px-6 py-10 my-[150px] pt-20">
         <div className="grid lg:grid-cols-5 gap-8 items-center">
           {/* Left Side - Text Content */}
           <div ref={heroRef} className="text-center lg:text-left lg:col-span-2 relative z-20">
@@ -147,7 +142,8 @@ const Landing = () => {
       </div>
 
       <Footer />
-    </div>;
+    </div>
+  );
 };
 
 export default Landing;
