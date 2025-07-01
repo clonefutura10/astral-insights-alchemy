@@ -87,8 +87,8 @@ const Landing = () => {
       </nav>
 
       {/* Hero Section with 3D Model */}
-      <div className="relative z-10 container mx-auto px-6 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 container mx-auto px-6 py-10">
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
           {/* Left Side - Text Content */}
           <div ref={heroRef} className="text-center lg:text-left">
             <div className="mb-8">
@@ -106,6 +106,7 @@ const Landing = () => {
               baseRotation={5}
               blurStrength={10}
               containerClassName="mb-12"
+              textClassName="!text-lg md:!text-xl"
             >
               Bhagya badla nahi ja sakta, par sawara ja sakta hai. Discover the cosmic wisdom that guides your destiny through the ancient science of astrology.
             </ScrollReveal>
@@ -124,8 +125,8 @@ const Landing = () => {
             </div>
           </div>
 
-          {/* Right Side - 3D Spline Model */}
-          <div className="h-96 md:h-[500px] relative">
+          {/* Right Side - 3D Spline Model - Made Bigger */}
+          <div className="h-[500px] md:h-[600px] lg:h-[700px] relative">
             <spline-viewer 
               url="https://prod.spline.design/VcB3J4RW3CZxcnGV/scene.splinecode"
               className="w-full h-full rounded-2xl"
@@ -134,25 +135,25 @@ const Landing = () => {
         </div>
       </div>
 
-      {/* Features Grid */}
+      {/* Features Grid with Glass Effect */}
       <div className="relative z-10 container mx-auto px-6 pb-20">
         <div className="grid md:grid-cols-3 gap-8">
-          <Card className="bg-gradient-to-br from-purple-900/50 to-indigo-900/50 border-purple-500/30 p-6 hover:transform hover:scale-105 transition-all duration-300">
+          <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
             <Sun className="w-12 h-12 text-yellow-400 mb-4" />
             <h3 className="text-xl font-bold mb-2 text-white">Ancient Wisdom</h3>
-            <p className="text-purple-200">Discover insights from thousands of years of Vedic astrology knowledge</p>
+            <p className="text-gray-300">Discover insights from thousands of years of Vedic astrology knowledge</p>
           </Card>
           
-          <Card className="bg-gradient-to-br from-indigo-900/50 to-blue-900/50 border-blue-500/30 p-6 hover:transform hover:scale-105 transition-all duration-300">
+          <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
             <Star className="w-12 h-12 text-blue-400 mb-4" />
             <h3 className="text-xl font-bold mb-2 text-white">Personalized Analysis</h3>
-            <p className="text-blue-200">Get detailed insights based on your unique planetary positions</p>
+            <p className="text-gray-300">Get detailed insights based on your unique planetary positions</p>
           </Card>
           
-          <Card className="bg-gradient-to-br from-purple-900/50 to-pink-900/50 border-pink-500/30 p-6 hover:transform hover:scale-105 transition-all duration-300">
+          <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
             <Moon className="w-12 h-12 text-pink-400 mb-4" />
             <h3 className="text-xl font-bold mb-2 text-white">Life Guidance</h3>
-            <p className="text-pink-200">Understand your challenges and find clarity for your path ahead</p>
+            <p className="text-gray-300">Understand your challenges and find clarity for your path ahead</p>
           </Card>
         </div>
       </div>
