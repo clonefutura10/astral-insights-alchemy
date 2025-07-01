@@ -108,7 +108,7 @@ const Landing = () => {
 
           {/* Right Side - 3D Spline Model - Positioned Behind Text */}
           <div className="absolute inset-0 lg:left-1/3 lg:right-0 h-[500px] md:h-[600px] lg:h-[700px] z-10 opacity-30">
-            <spline-viewer url="https://prod.spline.design/VcB3J4RW3CZxcnGV/scene.splinecode" className="w-full h-full rounded-2xl" />
+            <spline-viewer url="https://prod.spline.design/VcB3J4RW3CZxcnGV/scene.splinecode" className="w-full h-full rounded-2xl mt-[-100px]\n" />
           </div>
         </div>
       </div>
