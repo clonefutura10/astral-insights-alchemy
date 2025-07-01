@@ -55,7 +55,7 @@ const Landing = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-900 to-black text-white overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white overflow-hidden">
       {/* Floating Stars Background */}
       <div ref={starsRef} className="fixed inset-0 pointer-events-none z-0">
         {[...Array(50)].map((_, i) => (
