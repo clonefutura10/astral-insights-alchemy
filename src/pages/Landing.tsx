@@ -6,14 +6,24 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ScrollReveal from '../components/ScrollReveal';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Sparkles, Moon, Star, Sun } from 'lucide-react';
+import { Moon, Star, Sun } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Declare the spline-viewer as a custom element
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'spline-viewer': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
+        url?: string;
+      };
+    }
+  }
+}
 
 const Landing = () => {
   const starsRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
-  const splineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Create floating stars animation
@@ -41,19 +51,6 @@ const Landing = () => {
           ease: "power3.out"
         }
       );
-    }
-
-    // Parallax effect for 3D model
-    if (splineRef.current) {
-      gsap.to(splineRef.current, {
-        y: -50,
-        scrollTrigger: {
-          trigger: splineRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
     }
   }, []);
 
@@ -89,49 +86,52 @@ const Landing = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <div ref={heroRef} className="relative z-10 container mx-auto px-6 py-20 text-center">
-        <div className="mb-8">
-          <Sparkles className="w-16 h-16 mx-auto mb-6 text-yellow-400 animate-spin" />
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
-            Jyotish Shastra
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 text-purple-200">
-            The Science in Simple Terms
-          </p>
+      {/* Hero Section with 3D Model */}
+      <div className="relative z-10 container mx-auto px-6 py-20">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left Side - Text Content */}
+          <div ref={heroRef} className="text-center lg:text-left">
+            <div className="mb-8">
+              <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
+                Jyotish Shastra
+              </h1>
+              <p className="text-xl md:text-2xl mb-8 text-purple-200">
+                The Science in Simple Terms
+              </p>
+            </div>
+
+            <ScrollReveal
+              baseOpacity={0}
+              enableBlur={true}
+              baseRotation={5}
+              blurStrength={10}
+              containerClassName="mb-12"
+            >
+              Bhagya badla nahi ja sakta, par sawara ja sakta hai. Discover the cosmic wisdom that guides your destiny through the ancient science of astrology.
+            </ScrollReveal>
+
+            <div className="flex justify-center lg:justify-start space-x-6 mb-16">
+              <Link to="/consultation">
+                <Button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-8 py-4 text-lg font-semibold rounded-full shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105">
+                  Start Your Journey
+                </Button>
+              </Link>
+              <Link to="/about">
+                <Button variant="outline" className="border-purple-400 text-purple-300 hover:bg-purple-400 hover:text-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105">
+                  Learn More
+                </Button>
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Side - 3D Spline Model */}
+          <div className="h-96 md:h-[500px] relative">
+            <spline-viewer 
+              url="https://prod.spline.design/VcB3J4RW3CZxcnGV/scene.splinecode"
+              className="w-full h-full rounded-2xl"
+            />
+          </div>
         </div>
-
-        <ScrollReveal
-          baseOpacity={0}
-          enableBlur={true}
-          baseRotation={5}
-          blurStrength={10}
-          containerClassName="mb-12"
-        >
-          Bhagya badla nahi ja sakta, par sawara ja sakta hai. Discover the cosmic wisdom that guides your destiny through the ancient science of astrology.
-        </ScrollReveal>
-
-        <div className="flex justify-center space-x-6 mb-16">
-          <Link to="/consultation">
-            <Button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-8 py-4 text-lg font-semibold rounded-full shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105">
-              Start Your Journey
-            </Button>
-          </Link>
-          <Link to="/about">
-            <Button variant="outline" className="border-purple-400 text-purple-300 hover:bg-purple-400 hover:text-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105">
-              Learn More
-            </Button>
-          </Link>
-        </div>
-      </div>
-
-      {/* 3D Spline Model */}
-      <div ref={splineRef} className="relative z-10 h-96 md:h-[500px] mb-20">
-        <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.18/build/spline-viewer.js"></script>
-        <spline-viewer 
-          url="https://prod.spline.design/VcB3J4RW3CZxcnGV/scene.splinecode"
-          className="w-full h-full"
-        ></spline-viewer>
       </div>
 
       {/* Features Grid */}
