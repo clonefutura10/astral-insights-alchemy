@@ -86,50 +86,55 @@ const Landing = () => {
         </div>
       </nav>
 
-      {/* Hero Section with 3D Model flowing underneath */}
-      <div className="relative container mx-auto px-6 py-10">
-        {/* 3D Spline Model - Background Layer */}
-        <div className="absolute inset-0 z-0 opacity-40">
+      {/* Hero Section with 3D Model */}
+      <div className="relative z-10 container mx-auto px-6 py-10">
+        {/* 3D Spline Model - Background Layer underneath text */}
+        <div className="absolute inset-0 left-1/2 transform -translate-x-1/2 w-full max-w-6xl z-0 opacity-30">
           <spline-viewer 
             url="https://prod.spline.design/VcB3J4RW3CZxcnGV/scene.splinecode"
             className="w-full h-full"
           />
         </div>
 
-        {/* Text Content - Foreground Layer */}
-        <div ref={heroRef} className="relative z-10 text-center max-w-4xl mx-auto">
-          <div className="mb-8">
-            <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
-              Jyotish Shastra
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-purple-200">
-              The Science in Simple Terms
-            </p>
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
+          {/* Left Side - Text Content */}
+          <div ref={heroRef} className="text-center lg:text-left relative z-10">
+            <div className="mb-8">
+              <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
+                Jyotish Shastra
+              </h1>
+              <p className="text-xl md:text-2xl mb-8 text-purple-200">
+                The Science in Simple Terms
+              </p>
+            </div>
+
+            <ScrollReveal
+              baseOpacity={0}
+              enableBlur={true}
+              baseRotation={5}
+              blurStrength={10}
+              containerClassName="mb-12"
+              textClassName="!text-lg md:!text-xl"
+            >
+              Bhagya badla nahi ja sakta, par sawara ja sakta hai. Discover the cosmic wisdom that guides your destiny through the ancient science of astrology.
+            </ScrollReveal>
+
+            <div className="flex justify-center lg:justify-start space-x-6 mb-16">
+              <Link to="/consultation">
+                <Button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-8 py-4 text-lg font-semibold rounded-full shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105">
+                  Start Your Journey
+                </Button>
+              </Link>
+              <Link to="/about">
+                <Button variant="outline" className="border-purple-400 text-purple-300 hover:bg-purple-400 hover:text-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105">
+                  Learn More
+                </Button>
+              </Link>
+            </div>
           </div>
 
-          <ScrollReveal
-            baseOpacity={0}
-            enableBlur={true}
-            baseRotation={5}
-            blurStrength={10}
-            containerClassName="mb-12"
-            textClassName="!text-lg md:!text-xl"
-          >
-            Bhagya badla nahi ja sakta, par sawara ja sakta hai. Discover the cosmic wisdom that guides your destiny through the ancient science of astrology.
-          </ScrollReveal>
-
-          <div className="flex justify-center space-x-6 mb-16">
-            <Link to="/consultation">
-              <Button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-8 py-4 text-lg font-semibold rounded-full shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105">
-                Start Your Journey
-              </Button>
-            </Link>
-            <Link to="/about">
-              <Button variant="outline" className="border-purple-400 text-purple-300 hover:bg-purple-400 hover:text-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105">
-                Learn More
-              </Button>
-            </Link>
-          </div>
+          {/* Right Side - Empty space to maintain grid structure */}
+          <div className="hidden lg:block"></div>
         </div>
       </div>
 
