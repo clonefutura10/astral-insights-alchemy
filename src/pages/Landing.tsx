@@ -24,6 +24,7 @@ declare global {
 const Landing = () => {
   const starsRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const particlesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Create floating stars animation
@@ -33,6 +34,21 @@ const Landing = () => {
         y: -20,
         duration: 2,
         ease: "power2.inOut",
+        stagger: 0.1,
+        repeat: -1,
+        yoyo: true,
+      });
+    }
+
+    // Enhanced particle effects
+    if (particlesRef.current) {
+      const particles = particlesRef.current.children;
+      gsap.to(particles, {
+        y: "random(-50, 50)",
+        x: "random(-30, 30)",
+        rotation: "random(-180, 180)",
+        duration: "random(3, 6)",
+        ease: "sine.inOut",
         stagger: 0.1,
         repeat: -1,
         yoyo: true,
@@ -55,16 +71,54 @@ const Landing = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white overflow-hidden">
-      {/* Floating Stars Background */}
+    <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-900 to-black text-white overflow-hidden relative">
+      {/* Enhanced Floating Stars Background */}
       <div ref={starsRef} className="fixed inset-0 pointer-events-none z-0">
-        {[...Array(50)].map((_, i) => (
+        {[...Array(100)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-yellow-200 rounded-full animate-pulse"
+            className="absolute w-1 h-1 bg-yellow-200 rounded-full animate-pulse twinkle-animation"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Cosmic Particles */}
+      <div ref={particlesRef} className="fixed inset-0 pointer-events-none z-0">
+        {[...Array(30)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-2 h-2 rounded-full opacity-30"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              background: `radial-gradient(circle, ${
+                ['#fbbf24', '#a855f7', '#3b82f6', '#ec4899'][Math.floor(Math.random() * 4)]
+              }, transparent)`,
+              animationDelay: `${Math.random() * 5}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Mystical Orbs */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {[...Array(5)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full opacity-20 cosmic-glow"
+            style={{
+              left: `${Math.random() * 80 + 10}%`,
+              top: `${Math.random() * 80 + 10}%`,
+              width: `${Math.random() * 200 + 100}px`,
+              height: `${Math.random() * 200 + 100}px`,
+              background: `radial-gradient(circle, ${
+                ['rgba(168, 85, 247, 0.3)', 'rgba(59, 130, 246, 0.3)', 'rgba(236, 72, 153, 0.3)'][Math.floor(Math.random() * 3)]
+              }, transparent)`,
               animationDelay: `${Math.random() * 3}s`,
             }}
           />
