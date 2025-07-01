@@ -1,0 +1,176 @@
+
+import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import ScrollReveal from '../components/ScrollReveal';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Sparkles, Moon, Star, Sun } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const Landing = () => {
+  const starsRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const splineRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Create floating stars animation
+    if (starsRef.current) {
+      const stars = starsRef.current.children;
+      gsap.to(stars, {
+        y: -20,
+        duration: 2,
+        ease: "power2.inOut",
+        stagger: 0.1,
+        repeat: -1,
+        yoyo: true,
+      });
+    }
+
+    // Hero text entrance animation
+    if (heroRef.current) {
+      gsap.fromTo(heroRef.current.children, 
+        { opacity: 0, y: 100 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 1.5, 
+          stagger: 0.3,
+          ease: "power3.out"
+        }
+      );
+    }
+
+    // Parallax effect for 3D model
+    if (splineRef.current) {
+      gsap.to(splineRef.current, {
+        y: -50,
+        scrollTrigger: {
+          trigger: splineRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    }
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-purple-900 to-black text-white overflow-hidden">
+      {/* Floating Stars Background */}
+      <div ref={starsRef} className="fixed inset-0 pointer-events-none z-0">
+        {[...Array(50)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-yellow-200 rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Navigation */}
+      <nav className="relative z-20 p-6 flex justify-between items-center">
+        <div className="flex items-center space-x-2">
+          <Moon className="w-8 h-8 text-yellow-400" />
+          <span className="text-2xl font-bold bg-gradient-to-r from-yellow-400 to-purple-400 bg-clip-text text-transparent">
+            Pandit Pradeep Kiradoo
+          </span>
+        </div>
+        <div className="space-x-6">
+          <Link to="/" className="hover:text-yellow-400 transition-colors">Home</Link>
+          <Link to="/about" className="hover:text-yellow-400 transition-colors">About</Link>
+          <Link to="/consultation" className="hover:text-yellow-400 transition-colors">Consultation</Link>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <div ref={heroRef} className="relative z-10 container mx-auto px-6 py-20 text-center">
+        <div className="mb-8">
+          <Sparkles className="w-16 h-16 mx-auto mb-6 text-yellow-400 animate-spin" />
+          <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
+            Jyotish Shastra
+          </h1>
+          <p className="text-xl md:text-2xl mb-8 text-purple-200">
+            The Science in Simple Terms
+          </p>
+        </div>
+
+        <ScrollReveal
+          baseOpacity={0}
+          enableBlur={true}
+          baseRotation={5}
+          blurStrength={10}
+          containerClassName="mb-12"
+        >
+          Bhagya badla nahi ja sakta, par sawara ja sakta hai. Discover the cosmic wisdom that guides your destiny through the ancient science of astrology.
+        </ScrollReveal>
+
+        <div className="flex justify-center space-x-6 mb-16">
+          <Link to="/consultation">
+            <Button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-8 py-4 text-lg font-semibold rounded-full shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105">
+              Start Your Journey
+            </Button>
+          </Link>
+          <Link to="/about">
+            <Button variant="outline" className="border-purple-400 text-purple-300 hover:bg-purple-400 hover:text-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105">
+              Learn More
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+      {/* 3D Spline Model */}
+      <div ref={splineRef} className="relative z-10 h-96 md:h-[500px] mb-20">
+        <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.18/build/spline-viewer.js"></script>
+        <spline-viewer 
+          url="https://prod.spline.design/VcB3J4RW3CZxcnGV/scene.splinecode"
+          className="w-full h-full"
+        ></spline-viewer>
+      </div>
+
+      {/* Features Grid */}
+      <div className="relative z-10 container mx-auto px-6 pb-20">
+        <div className="grid md:grid-cols-3 gap-8">
+          <Card className="bg-gradient-to-br from-purple-900/50 to-indigo-900/50 border-purple-500/30 p-6 hover:transform hover:scale-105 transition-all duration-300">
+            <Sun className="w-12 h-12 text-yellow-400 mb-4" />
+            <h3 className="text-xl font-bold mb-2 text-white">Ancient Wisdom</h3>
+            <p className="text-purple-200">Discover insights from thousands of years of Vedic astrology knowledge</p>
+          </Card>
+          
+          <Card className="bg-gradient-to-br from-indigo-900/50 to-blue-900/50 border-blue-500/30 p-6 hover:transform hover:scale-105 transition-all duration-300">
+            <Star className="w-12 h-12 text-blue-400 mb-4" />
+            <h3 className="text-xl font-bold mb-2 text-white">Personalized Analysis</h3>
+            <p className="text-blue-200">Get detailed insights based on your unique planetary positions</p>
+          </Card>
+          
+          <Card className="bg-gradient-to-br from-purple-900/50 to-pink-900/50 border-pink-500/30 p-6 hover:transform hover:scale-105 transition-all duration-300">
+            <Moon className="w-12 h-12 text-pink-400 mb-4" />
+            <h3 className="text-xl font-bold mb-2 text-white">Life Guidance</h3>
+            <p className="text-pink-200">Understand your challenges and find clarity for your path ahead</p>
+          </Card>
+        </div>
+      </div>
+
+      {/* Quote Section */}
+      <div className="relative z-10 container mx-auto px-6 pb-20">
+        <ScrollReveal
+          baseOpacity={0.2}
+          enableBlur={true}
+          baseRotation={2}
+          blurStrength={6}
+          containerClassName="text-center"
+        >
+          "When the student is ready, the teacher appears. When the seeker is sincere, the stars reveal their secrets."
+        </ScrollReveal>
+      </div>
+    </div>
+  );
+};
+
+export default Landing;
