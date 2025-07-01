@@ -85,7 +85,7 @@ const About = () => {
           <div className="max-w-5xl mx-auto">
             {/* Main Description */}
             <div className="about-description mb-12">
-              <Card className="bg-white/10 backdrop-blur-lg border border-white/20 p-8 hover:bg-white/15 transition-all duration-300 shadow-xl">
+              <Card className="bg-white/5 backdrop-blur-xl border border-white/20 p-8 hover:bg-white/10 transition-all duration-300 shadow-2xl">
                 <ScrollReveal baseOpacity={0.3} enableBlur={true} baseRotation={1} blurStrength={2} containerClassName="mb-6">
                   <p className="text-lg text-gray-200 leading-relaxed mb-6">
                     Pandit Pradeep Kiradoo is a renowned Vedic astrologer with over 15 years of experience in Jyotish Shastra. His deep understanding of planetary influences and their impact on human life has guided countless individuals towards a more fulfilling and prosperous existence.
@@ -108,13 +108,13 @@ const About = () => {
             
             {/* Highlight Cards */}
             <div className="about-highlights grid md:grid-cols-2 gap-6 mb-12">
-              <Card className="bg-gradient-to-br from-purple-500/20 to-blue-500/20 backdrop-blur-lg border border-purple-300/30 p-6 text-center hover:transform hover:scale-105 transition-all duration-300 shadow-lg">
+              <Card className="bg-white/5 backdrop-blur-xl border border-purple-300/30 p-6 text-center hover:transform hover:scale-105 transition-all duration-300 shadow-2xl hover:bg-white/10">
                 <Star className="w-12 h-12 text-yellow-400 mb-4 mx-auto" />
                 <h3 className="text-xl font-semibold mb-3 text-white">15+ Years</h3>
                 <p className="text-sm text-gray-300">of dedicated practice in Vedic Astrology</p>
               </Card>
               
-              <Card className="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 backdrop-blur-lg border border-yellow-300/30 p-6 text-center hover:transform hover:scale-105 transition-all duration-300 shadow-lg">
+              <Card className="bg-white/5 backdrop-blur-xl border border-yellow-300/30 p-6 text-center hover:transform hover:scale-105 transition-all duration-300 shadow-2xl hover:bg-white/10">
                 <Heart className="w-12 h-12 text-pink-400 mb-4 mx-auto" />
                 <h3 className="text-xl font-semibold mb-3 text-white">Compassionate</h3>
                 <p className="text-sm text-gray-300">approach to spiritual guidance</p>
@@ -130,17 +130,17 @@ const About = () => {
             Core Values
           </h2>
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            <Card className="bg-white/10 backdrop-blur-lg border border-white/20 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/15 text-center shadow-lg">
+            <Card className="bg-white/5 backdrop-blur-xl border border-white/20 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10 text-center shadow-2xl">
               <BookOpen className="w-8 h-8 text-yellow-400 mb-4 mx-auto" />
               <h3 className="text-lg font-semibold mb-3 text-white">Integrity</h3>
               <p className="text-sm text-gray-300 leading-relaxed">Upholding ethical standards in every consultation with honesty and transparency.</p>
             </Card>
-            <Card className="bg-white/10 backdrop-blur-lg border border-white/20 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/15 text-center shadow-lg">
+            <Card className="bg-white/5 backdrop-blur-xl border border-white/20 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10 text-center shadow-2xl">
               <Users className="w-8 h-8 text-blue-400 mb-4 mx-auto" />
               <h3 className="text-lg font-semibold mb-3 text-white">Compassion</h3>
               <p className="text-sm text-gray-300 leading-relaxed">Approaching each individual with genuine care and understanding for their journey.</p>
             </Card>
-            <Card className="bg-white/10 backdrop-blur-lg border border-white/20 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/15 text-center shadow-lg">
+            <Card className="bg-white/5 backdrop-blur-xl border border-white/20 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10 text-center shadow-2xl">
               <Award className="w-8 h-8 text-green-400 mb-4 mx-auto" />
               <h3 className="text-lg font-semibold mb-3 text-white">Excellence</h3>
               <p className="text-sm text-gray-300 leading-relaxed">Delivering accurate insights through continuous learning and dedication to the craft.</p>
@@ -155,15 +155,15 @@ const About = () => {
             Experience & Recognition
           </h2>
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            <Card className="bg-white/10 backdrop-blur-lg border border-white/20 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/15 text-center shadow-lg">
+            <Card className="bg-white/5 backdrop-blur-xl border border-white/20 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10 text-center shadow-2xl">
               <h3 className="text-lg font-semibold mb-3 text-white">15+ Years of Practice</h3>
               <p className="text-sm text-gray-300 mb-4">Dedicated expertise in Vedic astrology and spiritual guidance.</p>
-              <Badge className="bg-purple-600/80 text-white text-xs">Vedic Astrology</Badge>
+              <Badge className="bg-purple-600/80 text-white text-xs backdrop-blur-sm">Vedic Astrology</Badge>
             </Card>
-            <Card className="bg-white/10 backdrop-blur-lg border border-white/20 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/15 text-center shadow-lg">
+            <Card className="bg-white/5 backdrop-blur-xl border border-white/20 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10 text-center shadow-2xl">
               <h3 className="text-lg font-semibold mb-3 text-white">Trusted by Thousands</h3>
               <p className="text-sm text-gray-300 mb-4">Helping individuals find clarity and direction across diverse life challenges.</p>
-              <Badge className="bg-blue-600/80 text-white text-xs">Life Guidance</Badge>
+              <Badge className="bg-blue-600/80 text-white text-xs backdrop-blur-sm">Life Guidance</Badge>
             </Card>
           </div>
         </section>
