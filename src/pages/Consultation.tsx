@@ -225,13 +225,13 @@ Please share these details so I can provide you with meaningful astrological ins
       {/* API Key Input */}
       {showApiKeyInput && (
         <div className="relative z-10 container mx-auto px-6 mb-4">
-          <Card className="max-w-md mx-auto bg-gradient-to-br from-indigo-900/40 to-purple-900/40 border-purple-500/30 p-4">
+          <Card className="max-w-md mx-auto bg-white/5 backdrop-blur-xl border border-white/10 p-4 shadow-2xl">
             <Label className="text-purple-200 mb-2 block">Groq API Key</Label>
             <Input
               type="password"
               value={groqApiKey}
               onChange={(e) => setGroqApiKey(e.target.value)}
-              className="bg-purple-900/30 border-purple-500/50 text-white"
+              className="bg-white/10 backdrop-blur-sm border-white/20 text-white placeholder:text-white/60"
               placeholder="Enter your Groq API key"
             />
             <p className="text-xs text-purple-400 mt-1">
@@ -246,9 +246,9 @@ Please share these details so I can provide you with meaningful astrological ins
 
       {/* Chat Interface */}
       <div className="relative z-10 container mx-auto px-6 pb-6">
-        <Card className="max-w-4xl mx-auto bg-gradient-to-br from-indigo-900/40 to-purple-900/40 border-purple-500/30 h-[600px] flex flex-col">
+        <Card className="max-w-4xl mx-auto bg-white/5 backdrop-blur-xl border border-white/10 h-[600px] flex flex-col shadow-2xl">
           {/* Chat Header */}
-          <div className="p-6 border-b border-purple-500/30">
+          <div className="p-6 border-b border-white/10">
             <h1 className="text-2xl font-bold bg-gradient-to-r from-yellow-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
               Astrological Consultation Chat
             </h1>
@@ -265,10 +265,10 @@ Please share these details so I can provide you with meaningful astrological ins
                 className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[80%] rounded-lg p-4 ${
+                  className={`max-w-[80%] rounded-lg p-4 shadow-lg ${
                     message.type === 'user'
-                      ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white'
-                      : 'bg-gradient-to-r from-yellow-900/30 to-orange-900/30 border border-yellow-500/30 text-yellow-100'
+                      ? 'bg-gradient-to-r from-purple-600/80 to-indigo-600/80 backdrop-blur-sm text-white border border-white/20'
+                      : 'bg-white/10 backdrop-blur-xl border border-white/20 text-yellow-100'
                   }`}
                 >
                   <div className="flex items-start space-x-2">
@@ -292,7 +292,7 @@ Please share these details so I can provide you with meaningful astrological ins
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 border border-yellow-500/30 rounded-lg p-4">
+                <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg p-4 shadow-lg">
                   <div className="flex items-center space-x-2">
                     <Bot className="w-5 h-5 text-yellow-400" />
                     <Loader2 className="w-4 h-4 animate-spin text-yellow-400" />
@@ -305,20 +305,20 @@ Please share these details so I can provide you with meaningful astrological ins
           </div>
 
           {/* Input Area */}
-          <div className="p-6 border-t border-purple-500/30">
+          <div className="p-6 border-t border-white/10">
             <div className="flex space-x-4">
               <Textarea
                 value={currentMessage}
                 onChange={(e) => setCurrentMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Share your concerns, questions, or birth details..."
-                className="flex-1 bg-purple-900/30 border-purple-500/50 text-white resize-none"
+                className="flex-1 bg-white/10 backdrop-blur-sm border-white/20 text-white resize-none placeholder:text-white/60"
                 rows={2}
               />
               <Button
                 onClick={sendMessage}
                 disabled={!currentMessage.trim() || isLoading}
-                className="bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 self-end"
+                className="bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 self-end backdrop-blur-sm"
               >
                 <Send className="w-4 h-4" />
               </Button>

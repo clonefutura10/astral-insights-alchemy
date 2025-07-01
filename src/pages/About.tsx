@@ -128,25 +128,25 @@ const About = () => {
 
         {/* Our Services Grid */}
         <div ref={cardsRef} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-          <Card className="bg-gradient-to-br from-purple-900/50 to-indigo-900/50 border-purple-500/30 p-6 text-center hover:transform hover:scale-105 transition-all duration-300">
+          <Card className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 text-center hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10 hover:border-white/20 shadow-2xl">
             <BookOpen className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
             <h3 className="text-xl font-bold mb-2 text-white">Ancient Texts</h3>
             <p className="text-purple-200">Based on classical Vedic astrology texts and centuries of wisdom</p>
           </Card>
 
-          <Card className="bg-gradient-to-br from-indigo-900/50 to-blue-900/50 border-blue-500/30 p-6 text-center hover:transform hover:scale-105 transition-all duration-300">
+          <Card className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 text-center hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10 hover:border-white/20 shadow-2xl">
             <Users className="w-12 h-12 text-blue-400 mx-auto mb-4" />
             <h3 className="text-xl font-bold mb-2 text-white">Personal Guidance</h3>
             <p className="text-blue-200">Individual consultations tailored to your unique planetary positions</p>
           </Card>
 
-          <Card className="bg-gradient-to-br from-blue-900/50 to-cyan-900/50 border-cyan-500/30 p-6 text-center hover:transform hover:scale-105 transition-all duration-300">
+          <Card className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 text-center hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10 hover:border-white/20 shadow-2xl">
             <Award className="w-12 h-12 text-cyan-400 mx-auto mb-4" />
             <h3 className="text-xl font-bold mb-2 text-white">Expertise</h3>
             <p className="text-cyan-200">Decades of experience in Vedic astrology and spiritual guidance</p>
           </Card>
 
-          <Card className="bg-gradient-to-br from-purple-900/50 to-pink-900/50 border-pink-500/30 p-6 text-center hover:transform hover:scale-105 transition-all duration-300">
+          <Card className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 text-center hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10 hover:border-white/20 shadow-2xl">
             <Heart className="w-12 h-12 text-pink-400 mx-auto mb-4" />
             <h3 className="text-xl font-bold mb-2 text-white">Compassionate</h3>
             <p className="text-pink-200">Understanding approach focused on healing and personal growth</p>
@@ -161,7 +161,7 @@ const About = () => {
           
           <div className="grid lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
-              <Card className="bg-gradient-to-br from-indigo-900/30 to-purple-900/30 border-purple-500/30 p-8">
+              <Card className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 shadow-2xl">
                 <h3 className="text-2xl font-bold mb-4 text-yellow-400">Experience & Expertise</h3>
                 <p className="text-lg leading-8 text-purple-100 mb-6">
                   With over 25 years of dedicated study and practice in Vedic astrology, Pandit Pradeep Kiradoo has guided thousands of seekers on their spiritual journey. His deep understanding of planetary influences and their impact on human life has made him a trusted advisor for people from all walks of life.
@@ -179,13 +179,13 @@ const About = () => {
             </div>
             
             <div className="space-y-6">
-              <Card className="bg-gradient-to-br from-yellow-900/30 to-orange-900/30 border-yellow-500/30 p-6">
+              <Card className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 shadow-2xl">
                 <Star className="w-8 h-8 text-yellow-400 mb-3" />
                 <h4 className="text-lg font-bold mb-2 text-white">Personalized Approach</h4>
                 <p className="text-yellow-100">Every consultation is unique, focusing on your specific planetary configurations and life circumstances.</p>
               </Card>
               
-              <Card className="bg-gradient-to-br from-purple-900/30 to-indigo-900/30 border-purple-500/30 p-6">
+              <Card className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 shadow-2xl">
                 <Moon className="w-8 h-8 text-purple-400 mb-3" />
                 <h4 className="text-lg font-bold mb-2 text-white">Holistic Understanding</h4>
                 <p className="text-purple-100">We look at the complete picture of your life, considering all planetary influences and their interconnections.</p>
