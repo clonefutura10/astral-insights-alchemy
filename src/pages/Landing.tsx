@@ -90,7 +90,7 @@ const Landing = () => {
       <div className="relative z-10 container mx-auto px-6 py-10">
         <div className="grid lg:grid-cols-5 gap-8 items-center">
           {/* Left Side - Text Content */}
-          <div ref={heroRef} className="text-center lg:text-left lg:col-span-2">
+          <div ref={heroRef} className="text-center lg:text-left lg:col-span-2 relative z-20">
             <div className="mb-8">
               <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
                 Jyotish Shastra
@@ -125,8 +125,8 @@ const Landing = () => {
             </div>
           </div>
 
-          {/* Right Side - 3D Spline Model - Made Wider */}
-          <div className="h-[500px] md:h-[600px] lg:h-[700px] lg:col-span-3 relative">
+          {/* Right Side - 3D Spline Model - Positioned Behind Text */}
+          <div className="absolute inset-0 lg:left-1/3 lg:right-0 h-[500px] md:h-[600px] lg:h-[700px] z-10 opacity-30">
             <spline-viewer 
               url="https://prod.spline.design/VcB3J4RW3CZxcnGV/scene.splinecode"
               className="w-full h-full rounded-2xl"
