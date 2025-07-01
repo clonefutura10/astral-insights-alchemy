@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
@@ -7,7 +6,6 @@ import ScrollReveal from '../components/ScrollReveal';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Moon, Star, Sun } from 'lucide-react';
-
 gsap.registerPlugin(ScrollTrigger);
 
 // Declare the spline-viewer as a custom element
@@ -20,11 +18,9 @@ declare global {
     }
   }
 }
-
 const Landing = () => {
   const starsRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     // Create floating stars animation
     if (starsRef.current) {
@@ -35,40 +31,32 @@ const Landing = () => {
         ease: "power2.inOut",
         stagger: 0.1,
         repeat: -1,
-        yoyo: true,
+        yoyo: true
       });
     }
 
     // Hero text entrance animation
     if (heroRef.current) {
-      gsap.fromTo(heroRef.current.children, 
-        { opacity: 0, y: 100 },
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 1.5, 
-          stagger: 0.3,
-          ease: "power3.out"
-        }
-      );
+      gsap.fromTo(heroRef.current.children, {
+        opacity: 0,
+        y: 100
+      }, {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        stagger: 0.3,
+        ease: "power3.out"
+      });
     }
   }, []);
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white overflow-hidden">
+  return <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white overflow-hidden">
       {/* Floating Stars Background */}
       <div ref={starsRef} className="fixed inset-0 pointer-events-none z-0">
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-yellow-200 rounded-full animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-            }}
-          />
-        ))}
+        {[...Array(50)].map((_, i) => <div key={i} className="absolute w-1 h-1 bg-yellow-200 rounded-full animate-pulse" style={{
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        animationDelay: `${Math.random() * 3}s`
+      }} />)}
       </div>
 
       {/* Navigation */}
@@ -87,7 +75,7 @@ const Landing = () => {
       </nav>
 
       {/* Hero Section with 3D Model */}
-      <div className="relative z-10 container mx-auto px-6 py-10">
+      <div className="relative z-10 container mx-auto px-6 py-10 my-[150px]">
         <div className="grid lg:grid-cols-5 gap-8 items-center">
           {/* Left Side - Text Content */}
           <div ref={heroRef} className="text-center lg:text-left lg:col-span-2 relative z-20">
@@ -100,14 +88,7 @@ const Landing = () => {
               </p>
             </div>
 
-            <ScrollReveal
-              baseOpacity={0}
-              enableBlur={true}
-              baseRotation={5}
-              blurStrength={10}
-              containerClassName="mb-12"
-              textClassName="!text-lg md:!text-xl"
-            >
+            <ScrollReveal baseOpacity={0} enableBlur={true} baseRotation={5} blurStrength={10} containerClassName="mb-12" textClassName="!text-lg md:!text-xl">
               Bhagya badla nahi ja sakta, par sawara ja sakta hai. Discover the cosmic wisdom that guides your destiny through the ancient science of astrology.
             </ScrollReveal>
 
@@ -127,10 +108,7 @@ const Landing = () => {
 
           {/* Right Side - 3D Spline Model - Positioned Behind Text */}
           <div className="absolute inset-0 lg:left-1/3 lg:right-0 h-[500px] md:h-[600px] lg:h-[700px] z-10 opacity-30">
-            <spline-viewer 
-              url="https://prod.spline.design/VcB3J4RW3CZxcnGV/scene.splinecode"
-              className="w-full h-full rounded-2xl"
-            />
+            <spline-viewer url="https://prod.spline.design/VcB3J4RW3CZxcnGV/scene.splinecode" className="w-full h-full rounded-2xl" />
           </div>
         </div>
       </div>
@@ -160,18 +138,10 @@ const Landing = () => {
 
       {/* Quote Section */}
       <div className="relative z-10 container mx-auto px-6 pb-20">
-        <ScrollReveal
-          baseOpacity={0.2}
-          enableBlur={true}
-          baseRotation={2}
-          blurStrength={6}
-          containerClassName="text-center"
-        >
+        <ScrollReveal baseOpacity={0.2} enableBlur={true} baseRotation={2} blurStrength={6} containerClassName="text-center">
           "When the student is ready, the teacher appears. When the seeker is sincere, the stars reveal their secrets."
         </ScrollReveal>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Landing;
