@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
@@ -58,10 +59,10 @@ const About = () => {
       
       {/* Floating Stars Background */}
       <div ref={starsRef} className="fixed inset-0 pointer-events-none z-0">
-        {[...Array(50)].map((_, i) => (
+        {[...Array(30)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-yellow-200 rounded-full animate-pulse"
+            className="absolute w-0.5 h-0.5 bg-yellow-200/40 rounded-full animate-pulse"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -74,70 +75,70 @@ const About = () => {
       {/* Hero Section - Added pt-20 for header spacing */}
       <div className="relative z-10 container mx-auto px-6 py-20 pt-32">
         {/* About Section */}
-        <section className="about-section mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center about-title">
+        <section className="about-section mb-20">
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center about-title">
             <Sparkles className="inline-block mr-2 text-yellow-400" />
             About Pandit Pradeep Kiradoo
           </h2>
-          <div className="text-lg text-gray-300 leading-relaxed about-content">
-            <ScrollReveal baseOpacity={0.2} enableBlur={true} baseRotation={2} blurStrength={6} containerClassName="mb-8">
-              Pandit Pradeep Kiradoo is a renowned Vedic astrologer with over 15 years of experience in Jyotish Shastra.
-              His deep understanding of planetary influences and their impact on human life has guided countless individuals
-              towards a more fulfilling and prosperous existence.
+          
+          <div className="max-w-4xl mx-auto">
+            <ScrollReveal baseOpacity={0.3} enableBlur={true} baseRotation={1} blurStrength={3} containerClassName="mb-8">
+              <div className="text-center text-lg text-gray-300 leading-relaxed">
+                A renowned Vedic astrologer with over 15 years of experience in Jyotish Shastra, 
+                combining ancient wisdom with modern insights to guide individuals toward fulfillment and prosperity.
+              </div>
             </ScrollReveal>
-            <ScrollReveal baseOpacity={0.2} enableBlur={true} baseRotation={2} blurStrength={6} containerClassName="mb-8">
-              With a compassionate approach, he combines ancient wisdom with modern techniques to provide personalized
-              astrological consultations. His expertise lies in analyzing birth charts, predicting future events, and
-              offering effective remedies to mitigate challenges.
-            </ScrollReveal>
-            <ScrollReveal baseOpacity={0.2} enableBlur={true} baseRotation={2} blurStrength={6} containerClassName="mb-8">
-              Pandit Pradeep Kiradoo is dedicated to empowering individuals with the knowledge of their cosmic potential,
-              helping them make informed decisions and navigate life's journey with confidence and clarity.
+            
+            <ScrollReveal baseOpacity={0.3} enableBlur={true} baseRotation={1} blurStrength={3} containerClassName="mb-8">
+              <div className="text-center text-base text-gray-400 leading-relaxed max-w-3xl mx-auto">
+                Specializing in birth chart analysis, future predictions, and personalized remedies, 
+                Pandit Kiradoo empowers clients with cosmic insights for confident decision-making.
+              </div>
             </ScrollReveal>
           </div>
         </section>
 
         {/* Our Values Section */}
-        <section className="values-section mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">
+        <section className="values-section mb-20">
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">
             <Heart className="inline-block mr-2 text-pink-400" />
-            Our Core Values
+            Core Values
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-              <BookOpen className="w-10 h-10 text-yellow-400 mb-4" />
-              <h3 className="text-xl font-bold mb-2 text-white">Integrity</h3>
-              <p className="text-gray-300">Upholding the highest standards of honesty and ethical conduct in every consultation.</p>
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10 text-center">
+              <BookOpen className="w-8 h-8 text-yellow-400 mb-4 mx-auto" />
+              <h3 className="text-lg font-semibold mb-3 text-white">Integrity</h3>
+              <p className="text-sm text-gray-300 leading-relaxed">Upholding ethical standards in every consultation with honesty and transparency.</p>
             </Card>
-            <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-              <Users className="w-10 h-10 text-blue-400 mb-4" />
-              <h3 className="text-xl font-bold mb-2 text-white">Empathy</h3>
-              <p className="text-gray-300">Approaching each individual with compassion, understanding, and genuine care for their well-being.</p>
+            <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10 text-center">
+              <Users className="w-8 h-8 text-blue-400 mb-4 mx-auto" />
+              <h3 className="text-lg font-semibold mb-3 text-white">Compassion</h3>
+              <p className="text-sm text-gray-300 leading-relaxed">Approaching each individual with genuine care and understanding for their journey.</p>
             </Card>
-            <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-              <Award className="w-10 h-10 text-green-400 mb-4" />
-              <h3 className="text-xl font-bold mb-2 text-white">Excellence</h3>
-              <p className="text-gray-300">Striving for continuous improvement and delivering the most accurate and insightful astrological guidance.</p>
+            <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10 text-center">
+              <Award className="w-8 h-8 text-green-400 mb-4 mx-auto" />
+              <h3 className="text-lg font-semibold mb-3 text-white">Excellence</h3>
+              <p className="text-sm text-gray-300 leading-relaxed">Delivering accurate insights through continuous learning and dedication to the craft.</p>
             </Card>
           </div>
         </section>
 
         {/* Achievements Section */}
         <section className="achievements-section">
-          <h2 className="text-3xl font-bold mb-8 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">
             <Award className="inline-block mr-2 text-green-400" />
-            Key Achievements
+            Experience & Recognition
           </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-              <h3 className="text-xl font-bold mb-2 text-white">15+ Years of Experience</h3>
-              <p className="text-gray-300">Providing expert astrological guidance for over a decade.</p>
-              <Badge className="mt-4 bg-purple-600 text-white">Vedic Astrology</Badge>
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10 text-center">
+              <h3 className="text-lg font-semibold mb-3 text-white">15+ Years of Practice</h3>
+              <p className="text-sm text-gray-300 mb-4">Dedicated expertise in Vedic astrology and spiritual guidance.</p>
+              <Badge className="bg-purple-600/80 text-white text-xs">Vedic Astrology</Badge>
             </Card>
-            <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-              <h3 className="text-xl font-bold mb-2 text-white">Thousands of Satisfied Clients</h3>
-              <p className="text-gray-300">Helping individuals find clarity and direction in their lives.</p>
-              <Badge className="mt-4 bg-blue-600 text-white">Life Guidance</Badge>
+            <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10 text-center">
+              <h3 className="text-lg font-semibold mb-3 text-white">Trusted by Thousands</h3>
+              <p className="text-sm text-gray-300 mb-4">Helping individuals find clarity and direction across diverse life challenges.</p>
+              <Badge className="bg-blue-600/80 text-white text-xs">Life Guidance</Badge>
             </Card>
           </div>
         </section>
