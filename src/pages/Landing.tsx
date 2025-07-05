@@ -223,7 +223,7 @@ const Landing = () => {
             </Card>
 
             {/* Enhanced Navigation */}
-            <div className="flex justify-center space-x-6">
+            <div className="flex justify-center space-x-6 flex-wrap gap-4">
               <Link to="/about">
                 <Button variant="outline" className="border-blue-300/40 text-blue-100/90 hover:bg-blue-800/20 hover:text-blue-100 px-8 py-3 bg-transparent hover:scale-105 transition-all duration-300">
                   Learn More About Me
@@ -231,7 +231,12 @@ const Landing = () => {
               </Link>
               <Link to="/consultation">
                 <Button className="bg-blue-500/80 hover:bg-blue-600/90 text-white px-8 py-3 border-0 hover:scale-105 transition-all duration-300 hover:shadow-lg">
-                  Full Consultation
+                  Quick Consultation
+                </Button>
+              </Link>
+              <Link to="/astrology-consultation">
+                <Button className="bg-gradient-to-r from-purple-500/80 to-blue-500/80 hover:from-purple-600/90 hover:to-blue-600/90 text-white px-8 py-3 border-0 hover:scale-105 transition-all duration-300 hover:shadow-lg">
+                  Deep Analysis Session
                 </Button>
               </Link>
             </div>
