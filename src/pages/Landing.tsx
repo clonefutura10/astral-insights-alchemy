@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
@@ -30,13 +31,13 @@ const Landing = () => {
   const [stars, setStars] = useState<Array<{ id: number; x: number; y: number; size: number; delay: number }>>([]);
 
   useEffect(() => {
-    // Generate stars
-    const newStars = Array.from({ length: 50 }, (_, i) => ({
+    // Generate more stars for better effect
+    const newStars = Array.from({ length: 80 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 3 + 1,
-      delay: Math.random() * 3
+      size: Math.random() * 4 + 1,
+      delay: Math.random() * 4
     }));
     setStars(newStars);
 
@@ -44,50 +45,60 @@ const Landing = () => {
     if (heroRef.current) {
       gsap.fromTo(heroRef.current.children, {
         opacity: 0,
-        y: 50
+        y: 60,
+        scale: 0.95
       }, {
         opacity: 1,
         y: 0,
-        duration: 1.2,
-        stagger: 0.2,
+        scale: 1,
+        duration: 1.5,
+        stagger: 0.3,
         ease: "power3.out"
       });
     }
 
-    // Scroll to bottom on new message
+    // Smooth scroll to bottom on new message
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      gsap.to(chatContainerRef.current, {
+        scrollTop: chatContainerRef.current.scrollHeight,
+        duration: 0.8,
+        ease: "power2.out"
+      });
     }
   }, [messages]);
 
   useEffect(() => {
     if (isChatMode && landingRef.current && chatModeRef.current) {
-      // Animate transition to chat mode
-      gsap.timeline()
-        .to(landingRef.current, {
-          opacity: 0,
-          scale: 0.95,
-          duration: 0.5,
-          ease: "power2.inOut"
-        })
-        .set(landingRef.current, { display: 'none' })
-        .set(chatModeRef.current, { display: 'flex' })
-        .fromTo(chatModeRef.current, {
-          opacity: 0,
-          y: 30
-        }, {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: "power2.out"
-        });
+      // Enhanced transition to chat mode
+      const tl = gsap.timeline();
+      
+      tl.to(landingRef.current, {
+        opacity: 0,
+        scale: 0.9,
+        y: -30,
+        duration: 0.8,
+        ease: "power3.inOut"
+      })
+      .set(landingRef.current, { display: 'none' })
+      .set(chatModeRef.current, { display: 'flex' })
+      .fromTo(chatModeRef.current, {
+        opacity: 0,
+        y: 50,
+        scale: 0.95
+      }, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 1,
+        ease: "power3.out"
+      });
     }
   }, [isChatMode]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    // Switch to chat mode on first message with animation
+    // Switch to chat mode on first message with enhanced animation
     if (!isChatMode) {
       setIsChatMode(true);
     }
@@ -98,22 +109,26 @@ const Landing = () => {
       text: input,
     };
 
-    // Animate message sending
+    // Enhanced message sending animation
     setMessages(prevMessages => [...prevMessages, userMessage]);
-    setInput('');
     
-    // Input clear animation
-    gsap.fromTo('.chat-input', {
-      scale: 1.02
-    }, {
-      scale: 1,
-      duration: 0.2,
-      ease: "power2.out"
-    });
-
+    // Smooth input clear with bounce effect
+    gsap.timeline()
+      .to('.chat-input', {
+        scale: 1.05,
+        duration: 0.1,
+        ease: "power2.out"
+      })
+      .to('.chat-input', {
+        scale: 1,
+        duration: 0.3,
+        ease: "bounce.out"
+      });
+    
+    setInput('');
     setIsLoading(true);
 
-    // Simulate bot response after a short delay
+    // Simulate bot response with enhanced timing
     setTimeout(() => {
       const botResponse: ChatMessage = {
         id: Date.now().toString() + '-bot',
@@ -122,7 +137,7 @@ const Landing = () => {
       };
       setMessages(prevMessages => [...prevMessages, botResponse]);
       setIsLoading(false);
-    }, 1500);
+    }, 1800);
   };
 
   const generateBotResponse = (userMessage: string): string => {
@@ -148,46 +163,47 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-800 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white relative overflow-hidden">
       <Header />
       
-      {/* Animated Stars Background */}
+      {/* Enhanced Animated Stars Background */}
       <div className="absolute inset-0 overflow-hidden">
         {stars.map(star => (
           <div
             key={star.id}
-            className="absolute bg-white/60 rounded-full animate-pulse"
+            className="absolute bg-white/70 rounded-full animate-pulse twinkle-animation"
             style={{
               left: `${star.x}%`,
               top: `${star.y}%`,
               width: `${star.size}px`,
               height: `${star.size}px`,
               animationDelay: `${star.delay}s`,
-              animationDuration: `${2 + Math.random() * 2}s`
+              animationDuration: `${2 + Math.random() * 3}s`,
+              boxShadow: `0 0 ${star.size * 2}px rgba(255,255,255,0.3)`
             }}
           />
         ))}
       </div>
 
-      {/* Curved light effect */}
-      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-t from-blue-400/10 via-cyan-300/5 to-transparent" />
-      <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-1/4 w-full h-32 bg-gradient-to-r from-cyan-400/10 via-blue-400/20 to-indigo-400/10 blur-2xl transform rotate-12" />
+      {/* Enhanced light effects */}
+      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-t from-purple-400/10 via-blue-300/5 to-transparent" />
+      <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute bottom-0 left-1/4 w-full h-32 bg-gradient-to-r from-blue-400/10 via-purple-400/20 to-indigo-400/10 blur-2xl transform rotate-12" />
       
       {/* Landing Mode */}
       <div ref={landingRef} className={`relative z-10 min-h-screen flex items-center justify-center px-6 ${isChatMode ? 'hidden' : 'flex'}`}>
         <div className="text-center max-w-5xl mx-auto">
           <div ref={heroRef}>
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-light mb-4 leading-tight tracking-tight text-white/90">
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-light mb-8 leading-tight tracking-tight bg-gradient-to-r from-yellow-300 via-blue-300 to-purple-300 bg-clip-text text-transparent">
               Pandit Pradeep Kiradoo
             </h1>
             
-            <p className="text-lg md:text-xl mb-12 text-white/70 font-light max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl mb-12 text-white/80 font-light max-w-2xl mx-auto">
               Complete Vedic Astrology Guidance for Life's Journey
             </p>
 
-            {/* Chat Box */}
-            <Card className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 max-w-2xl mx-auto mb-8 hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
+            {/* Enhanced Chat Box */}
+            <Card className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 max-w-2xl mx-auto mb-8 hover:bg-white/15 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl cosmic-glow">
               <div className="flex space-x-3">
                 <Input
                   type="text"
@@ -195,26 +211,26 @@ const Landing = () => {
                   value={input}
                   onChange={e => setInput(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  className="flex-1 bg-white/5 border-white/20 text-white placeholder-white/50 focus:border-blue-400 focus:ring-blue-400/20 transition-all duration-300 chat-input"
+                  className="flex-1 bg-white/10 border-white/30 text-white placeholder-white/60 focus:border-purple-400 focus:ring-purple-400/30 transition-all duration-300 chat-input"
                 />
                 <Button 
                   onClick={sendMessage}
-                  className="bg-blue-500/80 hover:bg-blue-600/80 text-white px-6 border-0 hover:scale-105 transition-all duration-200 hover:shadow-lg"
+                  className="bg-purple-500/80 hover:bg-purple-600/90 text-white px-6 border-0 hover:scale-110 transition-all duration-300 hover:shadow-lg cosmic-glow"
                 >
                   <Send className="w-4 h-4" />
                 </Button>
               </div>
             </Card>
 
-            {/* Additional Navigation */}
+            {/* Enhanced Navigation */}
             <div className="flex justify-center space-x-6">
               <Link to="/about">
-                <Button variant="outline" className="border-white/30 text-white/80 hover:bg-white/10 hover:text-white px-8 py-3 bg-transparent hover:scale-105 transition-all duration-200">
+                <Button variant="outline" className="border-white/40 text-white/90 hover:bg-white/15 hover:text-white px-8 py-3 bg-transparent hover:scale-105 transition-all duration-300">
                   Learn More About Me
                 </Button>
               </Link>
               <Link to="/consultation">
-                <Button className="bg-blue-500/80 hover:bg-blue-600/80 text-white px-8 py-3 border-0 hover:scale-105 transition-all duration-200 hover:shadow-lg">
+                <Button className="bg-purple-500/80 hover:bg-purple-600/90 text-white px-8 py-3 border-0 hover:scale-105 transition-all duration-300 hover:shadow-lg">
                   Full Consultation
                 </Button>
               </Link>
@@ -223,30 +239,30 @@ const Landing = () => {
         </div>
       </div>
 
-      {/* Chat Mode */}
+      {/* Enhanced Chat Mode */}
       <div ref={chatModeRef} className={`relative z-10 min-h-screen flex-col justify-between px-6 py-20 ${isChatMode ? 'flex' : 'hidden'}`}>
         <div className="flex-1 max-w-4xl mx-auto w-full">
-          {/* Chat Messages */}
-          <div ref={chatContainerRef} className="space-y-4 mb-6 max-h-[60vh] overflow-y-auto">
+          {/* Enhanced Chat Messages */}
+          <div ref={chatContainerRef} className="space-y-6 mb-6 max-h-[60vh] overflow-y-auto">
             {messages.map((message, index) => (
               <div 
                 key={message.id} 
                 className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
-                style={{ animationDelay: `${index * 0.1}s` }}
+                style={{ animationDelay: `${index * 0.15}s` }}
               >
-                <div className={`rounded-2xl px-6 py-4 max-w-md transform transition-all duration-300 hover:scale-[1.02] ${
+                <div className={`rounded-2xl px-6 py-4 max-w-md transform transition-all duration-500 hover:scale-[1.02] ${
                   message.sender === 'user' 
-                    ? 'bg-blue-500/80 text-white hover:bg-blue-600/80 hover:shadow-lg' 
-                    : 'bg-white/10 text-white/90 border border-white/10 hover:bg-white/15 hover:shadow-lg'
+                    ? 'bg-purple-500/80 text-white hover:bg-purple-600/90 hover:shadow-xl cosmic-glow' 
+                    : 'bg-white/15 text-white/95 border border-white/20 hover:bg-white/20 hover:shadow-xl backdrop-blur-xl'
                 }`}>
                   <div className="flex items-start space-x-3">
                     {message.sender === 'bot' && (
-                      <Bot className="w-5 h-5 mt-1 text-blue-300 flex-shrink-0" />
+                      <Bot className="w-5 h-5 mt-1 text-purple-300 flex-shrink-0 animate-pulse" />
                     )}
                     {message.sender === 'user' && (
-                      <User className="w-5 h-5 mt-1 text-blue-100 flex-shrink-0" />
+                      <User className="w-5 h-5 mt-1 text-purple-100 flex-shrink-0" />
                     )}
-                    <span className="text-base">{message.text}</span>
+                    <span className="text-base leading-relaxed">{message.text}</span>
                   </div>
                 </div>
               </div>
@@ -254,10 +270,15 @@ const Landing = () => {
             
             {isLoading && (
               <div className="flex justify-start animate-fade-in">
-                <div className="bg-white/10 text-white/90 border border-white/10 rounded-2xl px-6 py-4 hover:bg-white/15 transition-all duration-300">
+                <div className="bg-white/15 text-white/95 border border-white/20 rounded-2xl px-6 py-4 hover:bg-white/20 transition-all duration-300 backdrop-blur-xl">
                   <div className="flex items-center space-x-3">
-                    <Bot className="w-5 h-5 text-blue-300 animate-pulse" />
+                    <Bot className="w-5 h-5 text-purple-300 animate-pulse" />
                     <span className="text-base">Consulting the stars...</span>
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-purple-300 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
+                      <div className="w-2 h-2 bg-purple-300 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
+                      <div className="w-2 h-2 bg-purple-300 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -265,7 +286,7 @@ const Landing = () => {
           </div>
         </div>
         
-        {/* Chat Input - Fixed at bottom */}
+        {/* Enhanced Chat Input */}
         <div className="max-w-4xl mx-auto w-full">
           <div className="flex space-x-4">
             <Input
@@ -274,11 +295,11 @@ const Landing = () => {
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
-              className="flex-1 bg-white/5 border-white/20 text-white placeholder-white/50 focus:border-blue-400 focus:ring-blue-400/20 h-12 text-base transition-all duration-300 chat-input focus:scale-[1.01]"
+              className="flex-1 bg-white/10 border-white/30 text-white placeholder-white/60 focus:border-purple-400 focus:ring-purple-400/30 h-12 text-base transition-all duration-300 chat-input focus:scale-[1.01] backdrop-blur-xl"
             />
             <Button 
               onClick={sendMessage}
-              className="bg-blue-500/80 hover:bg-blue-600/80 text-white px-8 border-0 h-12 hover:scale-105 transition-all duration-200 hover:shadow-lg"
+              className="bg-purple-500/80 hover:bg-purple-600/90 text-white px-8 border-0 h-12 hover:scale-105 transition-all duration-300 hover:shadow-lg cosmic-glow"
             >
               <Send className="w-5 h-5" />
             </Button>
