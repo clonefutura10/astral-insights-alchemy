@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
@@ -10,6 +9,17 @@ import { Card } from '@/components/ui/card';
 import { Send, Bot, User } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Declare spline-viewer as a valid JSX element
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'spline-viewer': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
+        url?: string;
+      };
+    }
+  }
+}
 
 interface ChatMessage {
   id: string;
@@ -31,6 +41,12 @@ const Landing = () => {
   const [stars, setStars] = useState<Array<{ id: number; x: number; y: number; size: number; delay: number }>>([]);
 
   useEffect(() => {
+    // Load Spline viewer script
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/@splinetool/viewer@1.10.18/build/spline-viewer.js';
+    script.type = 'module';
+    document.head.appendChild(script);
+
     // Generate more stars for better effect
     const newStars = Array.from({ length: 80 }, (_, i) => ({
       id: i,
@@ -65,6 +81,10 @@ const Landing = () => {
         ease: "power2.out"
       });
     }
+
+    return () => {
+      document.head.removeChild(script);
+    };
   }, [messages]);
 
   useEffect(() => {
@@ -164,13 +184,13 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-800 via-blue-900 to-blue-800 text-white relative overflow-hidden">
-      {/* Spline 3D Background */}
+      {/* Spline 3D Background with reduced density */}
       <div className="absolute inset-0 z-0">
-        <spline-viewer url="https://prod.spline.design/VcB3J4RW3CZxcnGV/scene.splinecode" className="w-full h-full opacity-30"></spline-viewer>
+        <spline-viewer url="https://prod.spline.design/VcB3J4RW3CZxcnGV/scene.splinecode" className="w-full h-full opacity-15"></spline-viewer>
       </div>
 
       {/* Dark overlay to ensure text readability */}
-      <div className="absolute inset-0 bg-slate-900/40 z-10"></div>
+      <div className="absolute inset-0 bg-slate-900/30 z-10"></div>
 
       <Header />
       
