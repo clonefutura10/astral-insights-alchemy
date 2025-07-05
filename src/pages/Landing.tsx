@@ -164,10 +164,18 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-800 via-blue-900 to-blue-800 text-white relative overflow-hidden">
+      {/* Spline 3D Background */}
+      <div className="absolute inset-0 z-0">
+        <spline-viewer url="https://prod.spline.design/VcB3J4RW3CZxcnGV/scene.splinecode" className="w-full h-full opacity-30"></spline-viewer>
+      </div>
+
+      {/* Dark overlay to ensure text readability */}
+      <div className="absolute inset-0 bg-slate-900/40 z-10"></div>
+
       <Header />
       
       {/* Enhanced Animated Stars Background */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden z-20">
         {stars.map(star => (
           <div
             key={star.id}
@@ -186,12 +194,12 @@ const Landing = () => {
       </div>
 
       {/* Enhanced light effects */}
-      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-t from-blue-400/10 via-blue-300/5 to-transparent" />
-      <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-0 left-1/4 w-full h-32 bg-gradient-to-r from-blue-400/10 via-blue-500/20 to-blue-600/10 blur-2xl transform rotate-12" />
+      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-t from-blue-400/10 via-blue-300/5 to-transparent z-20" />
+      <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-pulse z-20" />
+      <div className="absolute bottom-0 left-1/4 w-full h-32 bg-gradient-to-r from-blue-400/10 via-blue-500/20 to-blue-600/10 blur-2xl transform rotate-12 z-20" />
       
       {/* Landing Mode */}
-      <div ref={landingRef} className={`relative z-10 min-h-screen flex items-center justify-center px-6 ${isChatMode ? 'hidden' : 'flex'}`}>
+      <div ref={landingRef} className={`relative z-30 min-h-screen flex items-center justify-center px-6 ${isChatMode ? 'hidden' : 'flex'}`}>
         <div className="text-center max-w-5xl mx-auto">
           <div ref={heroRef}>
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-light mb-8 leading-tight tracking-tight bg-gradient-to-r from-blue-200 via-blue-300 to-blue-400 bg-clip-text text-transparent">
@@ -240,7 +248,7 @@ const Landing = () => {
       </div>
 
       {/* Enhanced Chat Mode */}
-      <div ref={chatModeRef} className={`relative z-10 min-h-screen flex-col justify-between px-6 py-20 ${isChatMode ? 'flex' : 'hidden'}`}>
+      <div ref={chatModeRef} className={`relative z-30 min-h-screen flex-col justify-between px-6 py-20 ${isChatMode ? 'flex' : 'hidden'}`}>
         <div className="flex-1 max-w-4xl mx-auto w-full">
           {/* Enhanced Chat Messages */}
           <div ref={chatContainerRef} className="space-y-6 mb-6 max-h-[60vh] overflow-y-auto">
