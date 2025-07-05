@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
@@ -167,7 +168,7 @@ const Landing = () => {
                 <div className="flex space-x-3">
                   <Input
                     type="text"
-                    placeholder="Ask about your future, career, love life..."
+                    placeholder="Ask your problem"
                     value={input}
                     onChange={e => setInput(e.target.value)}
                     onKeyPress={handleKeyPress}
