@@ -1,147 +1,203 @@
-import React, { useEffect, useRef } from 'react';
+
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import ScrollReveal from '../components/ScrollReveal';
-import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
-import { Moon, Star, Sun } from 'lucide-react';
+import { Send, Bot, User } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Declare the spline-viewer as a custom element
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'spline-viewer': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
-        url?: string;
-      };
-    }
-  }
+interface ChatMessage {
+  id: string;
+  sender: 'user' | 'bot';
+  text: string;
 }
 
 const Landing = () => {
-  const starsRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    // Create floating stars animation
-    if (starsRef.current) {
-      const stars = starsRef.current.children;
-      gsap.to(stars, {
-        y: -20,
-        duration: 2,
-        ease: "power2.inOut",
-        stagger: 0.1,
-        repeat: -1,
-        yoyo: true
-      });
-    }
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
     // Hero text entrance animation
     if (heroRef.current) {
       gsap.fromTo(heroRef.current.children, {
         opacity: 0,
-        y: 100
+        y: 50
       }, {
         opacity: 1,
         y: 0,
-        duration: 1.5,
-        stagger: 0.3,
+        duration: 1.2,
+        stagger: 0.2,
         ease: "power3.out"
       });
     }
-  }, []);
+
+    // Scroll to bottom on new message
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  const sendMessage = async () => {
+    if (!input.trim()) return;
+
+    const userMessage: ChatMessage = {
+      id: Date.now().toString(),
+      sender: 'user',
+      text: input,
+    };
+
+    setMessages(prevMessages => [...prevMessages, userMessage]);
+    setInput('');
+    setIsLoading(true);
+
+    // Simulate bot response after a short delay
+    setTimeout(() => {
+      const botResponse: ChatMessage = {
+        id: Date.now().toString() + '-bot',
+        sender: 'bot',
+        text: generateBotResponse(input),
+      };
+      setMessages(prevMessages => [...prevMessages, botResponse]);
+      setIsLoading(false);
+    }, 1500);
+  };
+
+  const generateBotResponse = (userMessage: string): string => {
+    const lowerMessage = userMessage.toLowerCase();
+
+    if (lowerMessage.includes('horoscope') || lowerMessage.includes('birth chart')) {
+      return "I can provide insights about your horoscope and birth chart. Please share your birth date, time, and place for a personalized reading.";
+    } else if (lowerMessage.includes('future') || lowerMessage.includes('prediction')) {
+      return "The future holds many possibilities. Based on your planetary positions, I can guide you about upcoming opportunities and challenges.";
+    } else if (lowerMessage.includes('career') || lowerMessage.includes('job')) {
+      return "Career guidance through astrology can reveal your natural talents and favorable periods for professional growth. What specific career concerns do you have?";
+    } else if (lowerMessage.includes('love') || lowerMessage.includes('marriage')) {
+      return "Relationships and marriage timing can be understood through Vedic astrology. Your 7th house and Venus position play key roles in this aspect.";
+    } else {
+      return "Welcome! I'm here to help you with astrological guidance. Feel free to ask about your horoscope, career, relationships, or any life questions you may have.";
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white relative overflow-hidden">
       <Header />
       
-      {/* Floating Stars Background */}
-      <div ref={starsRef} className="fixed inset-0 pointer-events-none z-0">
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-yellow-200 rounded-full animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`
-            }}
-          />
-        ))}
-      </div>
+      {/* Background gradient effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-transparent to-purple-600/20" />
+      
+      {/* Main Hero Section */}
+      <div className="relative z-10 min-h-screen flex items-center justify-center px-6">
+        <div className="text-center max-w-4xl mx-auto">
+          <div ref={heroRef}>
+            <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight">
+              One Platform,<br />
+              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Endless Astrological Possibilities
+              </span>
+            </h1>
+            
+            <p className="text-xl md:text-2xl mb-12 text-blue-200 max-w-2xl mx-auto">
+              Complete Vedic Astrology Guidance for Life's Journey
+            </p>
 
-      {/* Hero Section with 3D Model - Added pt-20 for header spacing */}
-      <div className="relative z-10 container mx-auto px-6 py-10 my-[150px] pt-20">
-        <div className="grid lg:grid-cols-5 gap-8 items-center">
-          {/* Left Side - Text Content */}
-          <div ref={heroRef} className="text-center lg:text-left lg:col-span-2 relative z-20">
-            <div className="mb-8">
-              <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Jyotish Shastra
-              </h1>
-              <p className="text-xl md:text-2xl mb-8 text-purple-200">
-                The Science in Simple Terms
-              </p>
-            </div>
+            {/* Chat Box */}
+            <Card className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 max-w-2xl mx-auto">
+              <div className="mb-4">
+                <h3 className="text-xl font-semibold text-center mb-4 text-white">
+                  Ask Pandit Pradeep Kiradoo
+                </h3>
+                
+                {/* Chat Messages */}
+                <div ref={chatContainerRef} className="space-y-3 mb-4 max-h-80 overflow-y-auto">
+                  {messages.length === 0 && (
+                    <div className="text-center text-blue-200 py-8">
+                      <Bot className="w-12 h-12 mx-auto mb-3 text-blue-400" />
+                      <p>Welcome! I'm here to provide astrological guidance. What would you like to know?</p>
+                    </div>
+                  )}
+                  
+                  {messages.map(message => (
+                    <div key={message.id} className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                      <div className={`rounded-2xl px-4 py-3 max-w-xs ${
+                        message.sender === 'user' 
+                          ? 'bg-blue-600 text-white' 
+                          : 'bg-white/20 text-white border border-white/10'
+                      }`}>
+                        <div className="flex items-start space-x-2">
+                          {message.sender === 'bot' && (
+                            <Bot className="w-4 h-4 mt-0.5 text-blue-300 flex-shrink-0" />
+                          )}
+                          {message.sender === 'user' && (
+                            <User className="w-4 h-4 mt-0.5 text-blue-100 flex-shrink-0" />
+                          )}
+                          <span className="text-sm">{message.text}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  
+                  {isLoading && (
+                    <div className="flex justify-start">
+                      <div className="bg-white/20 text-white border border-white/10 rounded-2xl px-4 py-3">
+                        <div className="flex items-center space-x-2">
+                          <Bot className="w-4 h-4 text-blue-300" />
+                          <span className="text-sm">Consulting the stars...</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
+                {/* Chat Input */}
+                <div className="flex space-x-3">
+                  <Input
+                    type="text"
+                    placeholder="Ask about your future, career, love life..."
+                    value={input}
+                    onChange={e => setInput(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    className="flex-1 bg-white/10 border-white/20 text-white placeholder-blue-200 focus:border-blue-400"
+                  />
+                  <Button 
+                    onClick={sendMessage}
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6"
+                  >
+                    <Send className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            </Card>
 
-            <ScrollReveal baseOpacity={0} enableBlur={true} baseRotation={5} blurStrength={10} containerClassName="mb-12" textClassName="!text-lg md:!text-xl">
-              Bhagya badla nahi ja sakta, par sawara ja sakta hai. Discover the cosmic wisdom that guides your destiny through the ancient science of astrology.
-            </ScrollReveal>
-
-            <div className="flex justify-center lg:justify-start space-x-6 mb-16">
-              <Link to="/consultation">
-                <Button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-8 py-4 text-lg font-semibold rounded-full shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105">
-                  Start Your Journey
-                </Button>
-              </Link>
+            {/* Additional Navigation */}
+            <div className="flex justify-center space-x-6 mt-8">
               <Link to="/about">
-                <Button variant="outline" className="border-purple-400 text-purple-300 hover:bg-purple-400 hover:text-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105">
-                  Learn More
+                <Button variant="outline" className="border-blue-400 text-blue-300 hover:bg-blue-400 hover:text-white px-6 py-3">
+                  Learn More About Me
+                </Button>
+              </Link>
+              <Link to="/consultation">
+                <Button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-6 py-3">
+                  Full Consultation
                 </Button>
               </Link>
             </div>
           </div>
-
-          {/* Right Side - 3D Spline Model - Positioned Behind Text */}
-          <div className="absolute inset-0 lg:left-1/3 lg:right-0 h-[500px] md:h-[600px] lg:h-[700px] z-10 opacity-30">
-            <spline-viewer url="https://prod.spline.design/VcB3J4RW3CZxcnGV/scene.splinecode" className="w-full h-full rounded-2xl mt-[-100px]\n" />
-          </div>
         </div>
       </div>
-
-      {/* Features Grid with Glass Effect */}
-      <div className="relative z-10 container mx-auto px-6 pb-20">
-        <div className="grid md:grid-cols-3 gap-8">
-          <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-            <Sun className="w-12 h-12 text-yellow-400 mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-white">Ancient Wisdom</h3>
-            <p className="text-gray-300">Discover insights from thousands of years of Vedic astrology knowledge</p>
-          </Card>
-          
-          <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-            <Star className="w-12 h-12 text-blue-400 mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-white">Personalized Analysis</h3>
-            <p className="text-gray-300">Get detailed insights based on your unique planetary positions</p>
-          </Card>
-          
-          <Card className="bg-white/5 backdrop-blur-md border border-white/10 p-6 hover:transform hover:scale-105 transition-all duration-300 hover:bg-white/10">
-            <Moon className="w-12 h-12 text-pink-400 mb-4" />
-            <h3 className="text-xl font-bold mb-2 text-white">Life Guidance</h3>
-            <p className="text-gray-300">Understand your challenges and find clarity for your path ahead</p>
-          </Card>
-        </div>
-      </div>
-
-      {/* Quote Section */}
-      <div className="relative z-10 container mx-auto px-6 pb-20">
-        <ScrollReveal baseOpacity={0.2} enableBlur={true} baseRotation={2} blurStrength={6} containerClassName="text-center">
-          "When the student is ready, the teacher appears. When the seeker is sincere, the stars reveal their secrets."
-        </ScrollReveal>
-      </div>
-
-      <Footer />
     </div>
   );
 };
