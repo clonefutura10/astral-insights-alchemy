@@ -163,7 +163,7 @@ const Landing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-800 via-blue-900 to-blue-800 text-white relative overflow-hidden">
       <Header />
       
       {/* Enhanced Animated Stars Background */}
@@ -171,7 +171,7 @@ const Landing = () => {
         {stars.map(star => (
           <div
             key={star.id}
-            className="absolute bg-white/70 rounded-full animate-pulse twinkle-animation"
+            className="absolute bg-blue-200/70 rounded-full animate-pulse twinkle-animation"
             style={{
               left: `${star.x}%`,
               top: `${star.y}%`,
@@ -179,31 +179,31 @@ const Landing = () => {
               height: `${star.size}px`,
               animationDelay: `${star.delay}s`,
               animationDuration: `${2 + Math.random() * 3}s`,
-              boxShadow: `0 0 ${star.size * 2}px rgba(255,255,255,0.3)`
+              boxShadow: `0 0 ${star.size * 2}px rgba(147, 197, 253, 0.3)`
             }}
           />
         ))}
       </div>
 
       {/* Enhanced light effects */}
-      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-t from-purple-400/10 via-blue-300/5 to-transparent" />
-      <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-0 left-1/4 w-full h-32 bg-gradient-to-r from-blue-400/10 via-purple-400/20 to-indigo-400/10 blur-2xl transform rotate-12" />
+      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-t from-blue-400/10 via-blue-300/5 to-transparent" />
+      <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute bottom-0 left-1/4 w-full h-32 bg-gradient-to-r from-blue-400/10 via-blue-500/20 to-blue-600/10 blur-2xl transform rotate-12" />
       
       {/* Landing Mode */}
       <div ref={landingRef} className={`relative z-10 min-h-screen flex items-center justify-center px-6 ${isChatMode ? 'hidden' : 'flex'}`}>
         <div className="text-center max-w-5xl mx-auto">
           <div ref={heroRef}>
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-light mb-8 leading-tight tracking-tight bg-gradient-to-r from-yellow-300 via-blue-300 to-purple-300 bg-clip-text text-transparent">
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-light mb-8 leading-tight tracking-tight bg-gradient-to-r from-blue-200 via-blue-300 to-blue-400 bg-clip-text text-transparent">
               Pandit Pradeep Kiradoo
             </h1>
             
-            <p className="text-lg md:text-xl mb-12 text-white/80 font-light max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl mb-12 text-blue-100/80 font-light max-w-2xl mx-auto">
               Complete Vedic Astrology Guidance for Life's Journey
             </p>
 
             {/* Enhanced Chat Box */}
-            <Card className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 max-w-2xl mx-auto mb-8 hover:bg-white/15 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl cosmic-glow">
+            <Card className="bg-blue-900/20 backdrop-blur-xl border border-blue-300/20 p-6 max-w-2xl mx-auto mb-8 hover:bg-blue-900/30 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl cosmic-glow">
               <div className="flex space-x-3">
                 <Input
                   type="text"
@@ -211,11 +211,11 @@ const Landing = () => {
                   value={input}
                   onChange={e => setInput(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  className="flex-1 bg-white/10 border-white/30 text-white placeholder-white/60 focus:border-purple-400 focus:ring-purple-400/30 transition-all duration-300 chat-input"
+                  className="flex-1 bg-blue-800/20 border-blue-300/30 text-blue-100 placeholder-blue-200/60 focus:border-blue-400 focus:ring-blue-400/30 transition-all duration-300 chat-input"
                 />
                 <Button 
                   onClick={sendMessage}
-                  className="bg-purple-500/80 hover:bg-purple-600/90 text-white px-6 border-0 hover:scale-110 transition-all duration-300 hover:shadow-lg cosmic-glow"
+                  className="bg-blue-500/80 hover:bg-blue-600/90 text-white px-6 border-0 hover:scale-110 transition-all duration-300 hover:shadow-lg cosmic-glow"
                 >
                   <Send className="w-4 h-4" />
                 </Button>
@@ -225,12 +225,12 @@ const Landing = () => {
             {/* Enhanced Navigation */}
             <div className="flex justify-center space-x-6">
               <Link to="/about">
-                <Button variant="outline" className="border-white/40 text-white/90 hover:bg-white/15 hover:text-white px-8 py-3 bg-transparent hover:scale-105 transition-all duration-300">
+                <Button variant="outline" className="border-blue-300/40 text-blue-100/90 hover:bg-blue-800/20 hover:text-blue-100 px-8 py-3 bg-transparent hover:scale-105 transition-all duration-300">
                   Learn More About Me
                 </Button>
               </Link>
               <Link to="/consultation">
-                <Button className="bg-purple-500/80 hover:bg-purple-600/90 text-white px-8 py-3 border-0 hover:scale-105 transition-all duration-300 hover:shadow-lg">
+                <Button className="bg-blue-500/80 hover:bg-blue-600/90 text-white px-8 py-3 border-0 hover:scale-105 transition-all duration-300 hover:shadow-lg">
                   Full Consultation
                 </Button>
               </Link>
@@ -252,15 +252,15 @@ const Landing = () => {
               >
                 <div className={`rounded-2xl px-6 py-4 max-w-md transform transition-all duration-500 hover:scale-[1.02] ${
                   message.sender === 'user' 
-                    ? 'bg-purple-500/80 text-white hover:bg-purple-600/90 hover:shadow-xl cosmic-glow' 
-                    : 'bg-white/15 text-white/95 border border-white/20 hover:bg-white/20 hover:shadow-xl backdrop-blur-xl'
+                    ? 'bg-blue-500/80 text-white hover:bg-blue-600/90 hover:shadow-xl cosmic-glow' 
+                    : 'bg-blue-900/20 text-blue-100/95 border border-blue-300/20 hover:bg-blue-900/30 hover:shadow-xl backdrop-blur-xl'
                 }`}>
                   <div className="flex items-start space-x-3">
                     {message.sender === 'bot' && (
-                      <Bot className="w-5 h-5 mt-1 text-purple-300 flex-shrink-0 animate-pulse" />
+                      <Bot className="w-5 h-5 mt-1 text-blue-300 flex-shrink-0 animate-pulse" />
                     )}
                     {message.sender === 'user' && (
-                      <User className="w-5 h-5 mt-1 text-purple-100 flex-shrink-0" />
+                      <User className="w-5 h-5 mt-1 text-blue-100 flex-shrink-0" />
                     )}
                     <span className="text-base leading-relaxed">{message.text}</span>
                   </div>
@@ -270,14 +270,14 @@ const Landing = () => {
             
             {isLoading && (
               <div className="flex justify-start animate-fade-in">
-                <div className="bg-white/15 text-white/95 border border-white/20 rounded-2xl px-6 py-4 hover:bg-white/20 transition-all duration-300 backdrop-blur-xl">
+                <div className="bg-blue-900/20 text-blue-100/95 border border-blue-300/20 rounded-2xl px-6 py-4 hover:bg-blue-900/30 transition-all duration-300 backdrop-blur-xl">
                   <div className="flex items-center space-x-3">
-                    <Bot className="w-5 h-5 text-purple-300 animate-pulse" />
+                    <Bot className="w-5 h-5 text-blue-300 animate-pulse" />
                     <span className="text-base">Consulting the stars...</span>
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-purple-300 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
-                      <div className="w-2 h-2 bg-purple-300 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
-                      <div className="w-2 h-2 bg-purple-300 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
+                      <div className="w-2 h-2 bg-blue-300 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
+                      <div className="w-2 h-2 bg-blue-300 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
+                      <div className="w-2 h-2 bg-blue-300 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
                     </div>
                   </div>
                 </div>
@@ -295,11 +295,11 @@ const Landing = () => {
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
-              className="flex-1 bg-white/10 border-white/30 text-white placeholder-white/60 focus:border-purple-400 focus:ring-purple-400/30 h-12 text-base transition-all duration-300 chat-input focus:scale-[1.01] backdrop-blur-xl"
+              className="flex-1 bg-blue-800/20 border-blue-300/30 text-blue-100 placeholder-blue-200/60 focus:border-blue-400 focus:ring-blue-400/30 h-12 text-base transition-all duration-300 chat-input focus:scale-[1.01] backdrop-blur-xl"
             />
             <Button 
               onClick={sendMessage}
-              className="bg-purple-500/80 hover:bg-purple-600/90 text-white px-8 border-0 h-12 hover:scale-105 transition-all duration-300 hover:shadow-lg cosmic-glow"
+              className="bg-blue-500/80 hover:bg-blue-600/90 text-white px-8 border-0 h-12 hover:scale-105 transition-all duration-300 hover:shadow-lg cosmic-glow"
             >
               <Send className="w-5 h-5" />
             </Button>
