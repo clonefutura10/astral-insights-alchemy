@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Header from '../components/Header';
@@ -19,6 +19,7 @@ interface ChatMessage {
 
 const Landing = () => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -98,46 +99,8 @@ const Landing = () => {
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    // Switch to chat mode on first message with enhanced animation
-    if (!isChatMode) {
-      setIsChatMode(true);
-    }
-
-    const userMessage: ChatMessage = {
-      id: Date.now().toString(),
-      sender: 'user',
-      text: input,
-    };
-
-    // Enhanced message sending animation
-    setMessages(prevMessages => [...prevMessages, userMessage]);
-    
-    // Smooth input clear with bounce effect
-    gsap.timeline()
-      .to('.chat-input', {
-        scale: 1.05,
-        duration: 0.1,
-        ease: "power2.out"
-      })
-      .to('.chat-input', {
-        scale: 1,
-        duration: 0.3,
-        ease: "bounce.out"
-      });
-    
-    setInput('');
-    setIsLoading(true);
-
-    // Simulate bot response with enhanced timing
-    setTimeout(() => {
-      const botResponse: ChatMessage = {
-        id: Date.now().toString() + '-bot',
-        sender: 'bot',
-        text: generateBotResponse(input),
-      };
-      setMessages(prevMessages => [...prevMessages, botResponse]);
-      setIsLoading(false);
-    }, 1800);
+    // Redirect to astrology consultation with the message
+    navigate(`/astrology-consultation?message=${encodeURIComponent(input)}`);
   };
 
   const generateBotResponse = (userMessage: string): string => {

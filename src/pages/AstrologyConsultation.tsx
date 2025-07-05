@@ -24,6 +24,8 @@ interface UserProfile {
   additionalInfo?: string;
 }
 
+type ConsultationStage = 'initial' | 'gathering' | 'analysis' | 'report';
+
 const AstrologyConsultation = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -35,9 +37,52 @@ const AstrologyConsultation = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [userProfile, setUserProfile] = useState<UserProfile>({});
-  const [consultationStage, setConsultationStage] = useState<'initial' | 'gathering' | 'analysis' | 'report'>('initial');
+  const [consultationStage, setConsultationStage] = useState<ConsultationStage>('initial');
   const [apiKey] = useState('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');
   const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  // Check for initial message from URL params or state
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialMessage = urlParams.get('message');
+    
+    if (initialMessage) {
+      // Process the initial message
+      const userMessage: ChatMessage = {
+        id: Date.now().toString(),
+        sender: 'user',
+        text: decodeURIComponent(initialMessage),
+        timestamp: new Date().toLocaleTimeString()
+      };
+      
+      setMessages(prev => [...prev, userMessage]);
+      setConsultationStage('gathering');
+      
+      // Get AI response for the initial message
+      setTimeout(() => {
+        getAIResponse(decodeURIComponent(initialMessage), messages, userProfile, 'initial').then(response => {
+          const botMessage: ChatMessage = {
+            id: (Date.now() + 1).toString(),
+            sender: 'bot',
+            text: response.message,
+            timestamp: new Date().toLocaleTimeString()
+          };
+          setMessages(prev => [...prev, botMessage]);
+          
+          if (response.updatedProfile) {
+            setUserProfile(response.updatedProfile);
+          }
+          
+          if (response.newStage) {
+            setConsultationStage(response.newStage as ConsultationStage);
+          }
+        });
+      }, 1000);
+      
+      // Clear the URL params
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -80,7 +125,7 @@ const AstrologyConsultation = () => {
       }
       
       if (botResponse.newStage) {
-        setConsultationStage(botResponse.newStage);
+        setConsultationStage(botResponse.newStage as ConsultationStage);
       }
     } catch (error) {
       console.error('Error getting AI response:', error);
