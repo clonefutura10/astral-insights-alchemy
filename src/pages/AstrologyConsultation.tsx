@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import Header from '../components/Header';
@@ -147,7 +146,7 @@ const AstrologyConsultation = () => {
 
 1. Ask probing questions to deeply understand the person's problem
 2. Gather specific details about their situation, timing, and circumstances
-3. Eventually provide a detailed planetary analysis report (NOT remedies)
+3. Eventually provide a detailed planetary analysis report with solutions
 
 Current consultation stage: ${consultationStage}
 Questions asked so far: ${questionCount}
@@ -157,11 +156,23 @@ Guidelines:
 - Be empathetic, wise, and professional
 - Focus on understanding WHEN, WHERE, HOW the problem manifests
 - DO NOT ask for birth details, time, or place - work without them
-- DO NOT suggest remedies or solutions - only analyze and explain planetary influences
-- Use proper markdown formatting in your responses with proper line breaks
-- After 5-6 exchanges, provide a detailed planetary report explaining which planets are causing challenges and which are supporting them
-- Format reports with proper headings, bullet points, and emphasis
-- Use numbered lists with proper spacing (double line breaks between items)
+- After 5-6 exchanges, provide a detailed planetary report with complete solutions including Karakatva, Samasya, and Upay
+- Use proper markdown formatting with proper line breaks
+- Format solutions with detailed remedies, mantras, stones, and relationships
+
+When providing final analysis, include detailed solutions in this format for each planet:
+
+## **[Planet Name]**
+**Karakatva (Represents):** [What it represents]
+
+**Samasya:** [Problems when weak]
+
+**Upay:**
+- [Remedy 1]
+- [Remedy 2] 
+- **Jaap:** "[Mantra]"
+- **Relationship:** [Family relationship guidance]
+- **Stone:** [Gemstone with benefits]
 
 Previous conversation:
 ${conversationHistory}
@@ -189,7 +200,7 @@ Respond as Pandit Pradeep Kiradoo with wisdom and empathy, using markdown format
           }
         ],
         temperature: 0.7,
-        max_tokens: 1500,
+        max_tokens: 2000,
       }),
     });
 
@@ -206,35 +217,87 @@ Respond as Pandit Pradeep Kiradoo with wisdom and empathy, using markdown format
     
     console.log('Fallback - Question count:', currentQuestionCount, 'Stage:', stage, 'History length:', history.length);
     
-    // If we've reached 5+ questions, provide final analysis
+    // If we've reached 5+ questions, provide final analysis with complete solutions
     if (currentQuestionCount >= 5 || stage === 'report') {
-      return `Based on our detailed discussion, I can now provide you with an astrological analysis of your situation:
+      return `Based on our detailed discussion, I can now provide you with a comprehensive astrological analysis with complete solutions:
 
-## **PLANETARY ANALYSIS REPORT**
+## **PLANETARY ANALYSIS REPORT WITH SOLUTIONS**
 
-### 🔴 **Challenging Planetary Influences:**
+### 🔴 **Challenging Planetary Influences & Their Remedies:**
 
-• **Saturn (Shani)** appears to be creating obstacles and delays in your path, causing the persistent difficulties you're experiencing
+## **1. Surya (Sun)**
+**Karakatva (Represents):** Pratishtha, Naam, Tej, Pita (Status, Fame, Radiance, Father)
 
-• **Mars (Mangal)** may be contributing to conflicts and aggressive situations in your environment  
+**Samasya:** Agar Surya kamzor hai to aatma-vishwas ki kami, pitaji se madhbhed, pehchan mein kami hoti hai
 
-• **Rahu** (North Node) seems to be creating confusion and unconventional challenges
+**Upay:**
+- Surya ko daily jal chadhana (subah ke samay)
+- Aditya Hriday Stotra ka paath
+- **Jaap:** "Om Suryaay Namaha" (108 baar daily)
+- **Relationship:** Pitaji ya sasur ji ki seva, unka maan-samman
+- **Stone:** Manik (Ruby) dharan karna - Surya ki shakti badhata hai
+
+
+## **2. Chandra (Moon)** 
+**Karakatva (Represents):** Mann, Maa, Shanti (Mind, Mother, Peace)
+
+**Samasya:** Ashanti, decision making mein confusion, mann ka sthir na rehna
+
+**Upay:**
+- Shiv ki upasana (especially Somvaar ko)
+- Shivling par jal chadhana
+- **Jaap:** "Om Namah Shivaya" (108 baar)
+- **Relationship:** Maa ya saas ki seva aur samman
+- **Brahman ko daan:** Cheeni aur chawal Somvaar ko
+- **Stone:** Moti (Pearl) chandi ki ring mein dharan karna
+
+
+## **3. Mangal (Mars)**
+**Karakatva (Represents):** Saahas, Gussa, Parakram (Courage, Anger, Valor)
+
+**Samasya:** Atyadhik gussa, hinsa, accidents, bhai-behan se anban, issues in getting married
+
+**Upay:**
+- Hanuman ji ki upasana
+- Hanuman Chalisa ka paath (roz ya Mangal/Shani ko 7 baar)
+- **Jaap:** "Om Hanumate Namaha" 
+- **Relationship:** Bhai-behan se prem aur seva
+- **Stone:** Moonga (Red Coral) dharan karna
+
 
 ### 🟢 **Supporting Planetary Forces:**
 
-• **Jupiter (Guru)** is providing you with wisdom and the ability to seek guidance, which is why you've reached out
+## **4. Guru (Jupiter)**
+**Karakatva (Represents):** Gyan, Vidya, Santaan (Wisdom, Education, Children)
 
-• **Venus (Shukra)** is offering some protection in relationships and material comforts
+**Samasya:** Agar kamzor hai to galat decisions, adhyatmik shakti ki kami
 
-• **Mercury (Budh)** is supporting your communication and decision-making abilities
+**Upay:**
+- Brihaspativar ko vrat
+- **Jaap:** "Om Gurave Namaha"
+- **Relationship:** Guru aur buzurgon ka samman
+- **Stone:** Pukhraj (Yellow Sapphire)
 
-### **Key Insights:**
 
-The combination of Saturn and Rahu is creating what we call 'Shani-Rahu Yutti' effects in your life, causing unexpected delays and obstacles. However, Jupiter's supportive influence suggests that with proper understanding and patience, these challenges will transform into opportunities for growth.
+## **5. Shukra (Venus)**
+**Karakatva (Represents):** Prem, Sundarta, Dhan (Love, Beauty, Wealth)
 
-Your planetary configuration indicates this is a temporary phase that will improve as these planetary transits change. The difficulties you're facing are actually preparing you for a much stronger and more successful period ahead.
+**Upay:**
+- Shukravar ko Lakshmi puja
+- **Jaap:** "Om Shukraay Namaha"
+- **Stone:** Heera (Diamond) ya Safed Pukhraj
 
-*Would you like me to explain any specific aspect of this analysis in more detail?*`;
+
+### **🔮 Important Guidelines:**
+
+1. **Timing:** Subah 6-8 baje ka samay sabse uchit hai remedies ke liye
+2. **Consistency:** Kam se kam 40 din lagatar karna zaroori hai
+3. **Faith:** Poore vishwas aur shraddha ke saath karna chahiye
+4. **Donation:** Har Somvaar ko kuch na kuch daan karna beneficial hai
+
+*Your planetary configuration shows this challenging phase will improve significantly with consistent practice of these remedies. The cosmic energies are aligning to support your growth.*
+
+Would you like me to explain any specific remedy in more detail?`;
     }
     
     // Progressive questioning based on current count
@@ -298,7 +361,7 @@ Your planetary configuration indicates this is a temporary phase that will impro
 3. What would you consider your biggest strength in handling difficult situations?`;
     }
     
-    return "Thank you for your patience. Let me analyze all the information you've provided to give you a comprehensive astrological reading.";
+    return "Thank you for your patience. Let me analyze all the information you've provided to give you a comprehensive astrological reading with complete solutions.";
   };
 
   const sendMessage = async () => {
