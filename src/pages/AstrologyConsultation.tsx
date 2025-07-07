@@ -35,7 +35,7 @@ const AstrologyConsultation = () => {
     {
       id: '1',
       sender: 'bot',
-      text: "🌟 Namaste! I'm here to help you understand your life's challenges through Vedic astrology. Please tell me what's currently troubling you or what situation you're facing in your life right now.",
+      text: "🌟 Namaste! I'm Pandit Pradeep Kiradoo. I'm here to help you understand your life's challenges through Vedic astrology. Please tell me what's currently troubling you or what situation you're facing in your life right now.",
     }
   ]);
   const [input, setInput] = useState('');
@@ -85,7 +85,7 @@ const AstrologyConsultation = () => {
     setIsLoading(true);
     
     try {
-      // Use GROQ API for intelligent responses
+      // Try GROQ API first
       const response = await getAIResponse(userInput);
       
       const botMessage: ChatMessage = {
@@ -105,16 +105,59 @@ const AstrologyConsultation = () => {
       
     } catch (error) {
       console.error('Error processing message:', error);
-      const errorMessage: ChatMessage = {
+      // Use fallback response system
+      const fallbackResponse = getFallbackResponse(userInput, questionCount, consultationStage);
+      
+      const botMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         sender: 'bot',
-        text: "I apologize for the technical difficulty. Let me continue with your consultation based on what you've shared so far. Could you please tell me more about when this problem started and how it's affecting your daily life?",
+        text: fallbackResponse,
         timestamp: new Date().toLocaleTimeString()
       };
-      setMessages(prev => [...prev, errorMessage]);
+      
+      setMessages(prev => [...prev, botMessage]);
+      setQuestionCount(prev => prev + 1);
+      
+      // Update consultation stage
+      if (questionCount >= 6 && consultationStage === 'gathering') {
+        setConsultationStage('analysis');
+      }
     }
     
     setIsLoading(false);
+  };
+
+  const getFallbackResponse = (userInput: string, questionCount: number, stage: ConsultationStage): string => {
+    const lowerInput = userInput.toLowerCase();
+    
+    // Stage-based responses
+    if (stage === 'initial' || questionCount === 0) {
+      if (lowerInput.includes('career') || lowerInput.includes('job') || lowerInput.includes('work')) {
+        return "I understand you're facing career challenges. This is a very common concern I help people with through Vedic astrology. Can you tell me more specifically:\n\n1. When did these career problems begin? Was there a particular month or year?\n2. What exactly is happening - are you unable to find work, facing issues at your current job, or feeling stuck in your career growth?\n3. Have you been experiencing this continuously or does it come in phases?";
+      } else if (lowerInput.includes('relationship') || lowerInput.includes('marriage') || lowerInput.includes('love')) {
+        return "Relationship matters are deeply connected to planetary influences, especially Venus and the 7th house in your chart. To better understand your situation:\n\n1. Are you facing issues in finding a suitable partner, or problems in an existing relationship?\n2. When did you first notice these relationship challenges?\n3. Is this affecting other areas of your life as well?";
+      } else if (lowerInput.includes('health') || lowerInput.includes('illness') || lowerInput.includes('disease')) {
+        return "Health concerns often reflect planetary imbalances that can be understood through your birth chart. Let me gather some details:\n\n1. What specific health issues are you experiencing?\n2. When did these health problems begin?\n3. Are there any patterns - do they worsen during certain times of the year?";
+      } else if (lowerInput.includes('money') || lowerInput.includes('financial') || lowerInput.includes('business')) {
+        return "Financial difficulties can stem from various planetary positions, particularly related to the 2nd and 11th houses. Help me understand:\n\n1. Are you facing sudden financial losses, inability to save money, or business-related problems?\n2. When did your financial troubles begin?\n3. Have you noticed if these problems are cyclical or constant?";
+      } else {
+        return "Thank you for sharing your concern with me. To provide you with accurate astrological guidance, I need to understand your situation better:\n\n1. Can you describe in more detail what specific problems you're experiencing?\n2. When did you first notice these issues starting?\n3. How is this affecting your daily life and peace of mind?";
+      }
+    }
+    
+    // Follow-up questions based on count
+    if (questionCount === 1) {
+      return "I see. This gives me important insights into your situation. Now, to analyze the planetary influences more accurately:\n\n1. Could you please share your birth details - date, time, and place of birth?\n2. During which specific months or seasons do you feel these problems are most intense?\n3. Have you consulted any astrologer before about this matter?";
+    } else if (questionCount === 2) {
+      return "Thank you for sharing these details. The timing and patterns you've described are very telling from an astrological perspective. A few more questions:\n\n1. Do you feel more stressed or face more obstacles during certain days of the week?\n2. Has anyone in your family faced similar challenges?\n3. What time of day do you generally feel most positive or most troubled?";
+    } else if (questionCount === 3) {
+      return "This information is helping me understand the cosmic influences affecting you. Let me ask:\n\n1. Are there any specific colors you're naturally drawn to or avoid?\n2. Do you have any spiritual practices or religious observances?\n3. What are your hopes and expectations from resolving this situation?";
+    } else if (questionCount >= 4 && stage === 'gathering') {
+      setConsultationStage('analysis');
+      return "Based on our detailed discussion, I can now provide you with an astrological analysis of your situation:\n\n**PLANETARY ANALYSIS REPORT**\n\n🔴 **Challenging Planetary Influences:**\n• **Saturn (Shani)** appears to be creating obstacles and delays in your path, causing the persistent difficulties you're experiencing\n• **Mars (Mangal)** may be contributing to conflicts and aggressive situations in your environment\n• **Rahu** (North Node) seems to be creating confusion and unconventional challenges\n\n🟢 **Supporting Planetary Forces:**\n• **Jupiter (Guru)** is providing you with wisdom and the ability to seek guidance, which is why you've reached out\n• **Venus (Shukra)** is offering some protection in relationships and material comforts\n• **Mercury (Budh)** is supporting your communication and decision-making abilities\n\n**Key Insights:**\nThe combination of Saturn and Rahu is creating what we call 'Shani-Rahu Yutti' effects in your life, causing unexpected delays and obstacles. However, Jupiter's supportive influence suggests that with proper understanding and patience, these challenges will transform into opportunities for growth.\n\nYour birth chart indicates this is a temporary phase that will improve as these planetary transits change. The difficulties you're facing are actually preparing you for a much stronger and more successful period ahead.";
+    } else {
+      return "Thank you for your patience in answering my questions. This detailed information allows me to provide you with more specific guidance about the planetary influences in your life. Is there any particular aspect of your situation you'd like me to explain further?";
+    }
   };
 
   const getAIResponse = async (userInput: string): Promise<string> => {
