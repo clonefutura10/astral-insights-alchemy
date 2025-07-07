@@ -87,8 +87,8 @@ const AstrologyConsultation = () => {
     setIsLoading(true);
     
     try {
-      // Try OpenAI API first
-      const response = await getOpenAIResponse(userInput);
+      // Use GROQ API
+      const response = await getGroqResponse(userInput);
       
       const botMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
@@ -106,7 +106,7 @@ const AstrologyConsultation = () => {
       }
       
     } catch (error) {
-      console.error('OpenAI API failed, using fallback:', error);
+      console.error('GROQ API failed, using fallback:', error);
       // Use fallback response system
       const fallbackResponse = getFallbackResponse(userInput, questionCount, consultationStage);
       
@@ -127,6 +127,68 @@ const AstrologyConsultation = () => {
     }
     
     setIsLoading(false);
+  };
+
+  const getGroqResponse = async (userInput: string): Promise<string> => {
+    // Build context from conversation history
+    const conversationHistory = messages.map(msg => `${msg.sender}: ${msg.text}`).join('\n');
+    
+    const systemPrompt = `You are Pandit Pradeep Kiradoo, an expert Vedic astrologer conducting a consultation. Your role is to:
+
+1. Ask probing questions to deeply understand the person's problem
+2. Gather specific details about their situation, timing, and circumstances
+3. Eventually provide a detailed planetary analysis report (NOT remedies)
+
+Current consultation stage: ${consultationStage}
+Questions asked so far: ${questionCount}
+
+Guidelines:
+- Ask 2-3 follow-up questions to understand their problem better
+- Be empathetic, wise, and professional
+- Focus on understanding WHEN, WHERE, HOW the problem manifests
+- DO NOT ask for birth details, time, or place - work without them
+- DO NOT suggest remedies or solutions - only analyze and explain planetary influences
+- Use proper markdown formatting in your responses with proper line breaks
+- After 5-6 exchanges, provide a detailed planetary report explaining which planets are causing challenges and which are supporting them
+- Format reports with proper headings, bullet points, and emphasis
+- Use numbered lists with proper spacing (double line breaks between items)
+
+Previous conversation:
+${conversationHistory}
+
+Current user message: ${userInput}
+
+Respond as Pandit Pradeep Kiradoo with wisdom and empathy, using markdown formatting.`;
+
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer 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`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'llama-3.1-70b-versatile',
+        messages: [
+          {
+            role: 'system',
+            content: systemPrompt
+          },
+          {
+            role: 'user',
+            content: userInput
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 1500,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`GROQ API Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0].message.content;
   };
 
   const getFallbackResponse = (userInput: string, questionCount: number, stage: ConsultationStage): string => {
@@ -162,68 +224,6 @@ const AstrologyConsultation = () => {
     }
     
     return "Thank you for your patience in answering my questions. This detailed information allows me to provide you with more specific guidance about the planetary influences in your life. Is there any particular aspect of your situation you'd like me to explain further?";
-  };
-
-  const getOpenAIResponse = async (userInput: string): Promise<string> => {
-    // Build context from conversation history
-    const conversationHistory = messages.map(msg => `${msg.sender}: ${msg.text}`).join('\n');
-    
-    const systemPrompt = `You are Pandit Pradeep Kiradoo, an expert Vedic astrologer conducting a consultation. Your role is to:
-
-1. Ask probing questions to deeply understand the person's problem
-2. Gather specific details about their situation, timing, and circumstances
-3. Eventually provide a detailed planetary analysis report (NOT remedies)
-
-Current consultation stage: ${consultationStage}
-Questions asked so far: ${questionCount}
-
-Guidelines:
-- Ask 2-3 follow-up questions to understand their problem better
-- Be empathetic, wise, and professional
-- Focus on understanding WHEN, WHERE, HOW the problem manifests
-- DO NOT ask for birth details, time, or place - work without them
-- DO NOT suggest remedies or solutions - only analyze and explain planetary influences
-- Use proper markdown formatting in your responses with proper line breaks
-- After 5-6 exchanges, provide a detailed planetary report explaining which planets are causing challenges and which are supporting them
-- Format reports with proper headings, bullet points, and emphasis
-- Use numbered lists with proper spacing (double line breaks between items)
-
-Previous conversation:
-${conversationHistory}
-
-Current user message: ${userInput}
-
-Respond as Pandit Pradeep Kiradoo with wisdom and empathy, using markdown formatting.`;
-
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY || 'sk-fake-key'}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-4',
-        messages: [
-          {
-            role: 'system',
-            content: systemPrompt
-          },
-          {
-            role: 'user',
-            content: userInput
-          }
-        ],
-        temperature: 0.7,
-        max_tokens: 1500,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`OpenAI API Error: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data.choices[0].message.content;
   };
 
   const sendMessage = async () => {
