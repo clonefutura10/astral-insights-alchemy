@@ -21,6 +21,10 @@ interface UserProfile {
   birthTime?: string;
   birthPlace?: string;
   currentConcern?: string;
+  problemDetails?: string;
+  lifeArea?: string;
+  timeframe?: string;
+  previousExperience?: string;
   additionalInfo?: string;
 }
 
@@ -31,23 +35,22 @@ const AstrologyConsultation = () => {
     {
       id: '1',
       sender: 'bot',
-      text: "🌟 Welcome to your personalized astrology consultation. I'm here to understand your concerns and provide insights based on planetary influences. Please start by telling me what's currently troubling you or what area of life you'd like guidance on.",
+      text: "🌟 Namaste! I'm here to help you understand your life's challenges through Vedic astrology. Please tell me what's currently troubling you or what situation you're facing in your life right now.",
     }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [userProfile, setUserProfile] = useState<UserProfile>({});
   const [consultationStage, setConsultationStage] = useState<ConsultationStage>('initial');
-  const [apiKey] = useState('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');
+  const [questionCount, setQuestionCount] = useState(0);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  // Check for initial message from URL params or state
+  // Check for initial message from URL params
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const initialMessage = urlParams.get('message');
     
     if (initialMessage) {
-      // Process the initial message
       const userMessage: ChatMessage = {
         id: Date.now().toString(),
         sender: 'user',
@@ -58,28 +61,12 @@ const AstrologyConsultation = () => {
       setMessages(prev => [...prev, userMessage]);
       setConsultationStage('gathering');
       
-      // Get AI response for the initial message
+      // Process the initial message
       setTimeout(() => {
-        getAIResponse(decodeURIComponent(initialMessage), messages, userProfile, 'initial').then(response => {
-          const botMessage: ChatMessage = {
-            id: (Date.now() + 1).toString(),
-            sender: 'bot',
-            text: response.message,
-            timestamp: new Date().toLocaleTimeString()
-          };
-          setMessages(prev => [...prev, botMessage]);
-          
-          if (response.updatedProfile) {
-            setUserProfile(response.updatedProfile);
-          }
-          
-          if (response.newStage) {
-            setConsultationStage(response.newStage as ConsultationStage);
-          }
-        });
+        processUserMessage(decodeURIComponent(initialMessage));
       }, 1000);
       
-      // Clear the URL params
+      // Clear URL params
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, []);
@@ -94,79 +81,71 @@ const AstrologyConsultation = () => {
     }
   }, [messages]);
 
-  const sendMessage = async () => {
-    if (!input.trim()) return;
-
-    const userMessage: ChatMessage = {
-      id: Date.now().toString(),
-      sender: 'user',
-      text: input,
-      timestamp: new Date().toLocaleTimeString()
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-    setInput('');
+  const processUserMessage = async (userInput: string) => {
     setIsLoading(true);
-
+    
     try {
-      const botResponse = await getAIResponse(input, messages, userProfile, consultationStage);
+      // Use GROQ API for intelligent responses
+      const response = await getAIResponse(userInput);
       
       const botMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         sender: 'bot',
-        text: botResponse.message,
+        text: response,
         timestamp: new Date().toLocaleTimeString()
       };
 
       setMessages(prev => [...prev, botMessage]);
+      setQuestionCount(prev => prev + 1);
       
-      if (botResponse.updatedProfile) {
-        setUserProfile(botResponse.updatedProfile);
+      // Update consultation stage based on question count
+      if (questionCount >= 6 && consultationStage === 'gathering') {
+        setConsultationStage('analysis');
       }
       
-      if (botResponse.newStage) {
-        setConsultationStage(botResponse.newStage as ConsultationStage);
-      }
     } catch (error) {
-      console.error('Error getting AI response:', error);
+      console.error('Error processing message:', error);
       const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         sender: 'bot',
-        text: "I apologize, but I'm having trouble processing your request right now. Please try again in a moment.",
+        text: "I apologize for the technical difficulty. Let me continue with your consultation based on what you've shared so far. Could you please tell me more about when this problem started and how it's affecting your daily life?",
+        timestamp: new Date().toLocaleTimeString()
       };
       setMessages(prev => [...prev, errorMessage]);
     }
-
+    
     setIsLoading(false);
   };
 
-  const getAIResponse = async (userInput: string, chatHistory: ChatMessage[], profile: UserProfile, stage: string) => {
-    const conversation = chatHistory.map(msg => `${msg.sender}: ${msg.text}`).join('\n');
+  const getAIResponse = async (userInput: string): Promise<string> => {
+    const apiKey = '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';
     
-    const systemPrompt = `You are an expert Vedic astrologer conducting a consultation. Your role is to:
+    // Build context from conversation history
+    const conversationHistory = messages.map(msg => `${msg.sender}: ${msg.text}`).join('\n');
+    
+    const systemPrompt = `You are Pandit Pradeep Kiradoo, an expert Vedic astrologer conducting a consultation. Your role is to:
 
-1. Ask probing questions to understand the person's problem deeply
-2. Gather birth details (date, time, place) when appropriate
-3. Understand the context and background of their concerns
-4. Generate detailed planetary analysis reports when you have enough information
+1. Ask probing questions to deeply understand the person's problem
+2. Gather specific details about their situation, timing, and circumstances
+3. Eventually provide a detailed planetary analysis report (NOT remedies)
 
-Current consultation stage: ${stage}
-Current user profile: ${JSON.stringify(profile)}
+Current consultation stage: ${consultationStage}
+Questions asked so far: ${questionCount}
 
 Guidelines:
 - Ask 2-3 follow-up questions to understand their problem better
-- Be empathetic and professional
-- Don't suggest remedies yet - focus on understanding and analysis
-- When you have enough information, provide a detailed planetary report
-- Explain which planets are causing challenges and which are providing support
-- Keep responses conversational but insightful
+- Be empathetic, wise, and professional
+- Focus on understanding WHEN, WHERE, HOW the problem manifests
+- Ask about their birth details when appropriate for analysis
+- DO NOT suggest remedies or solutions - only analyze and explain planetary influences
+- After 6-8 exchanges, provide a detailed planetary report explaining which planets are causing challenges and which are supporting them
 
 Previous conversation:
-${conversation}
+${conversationHistory}
 
 Current user message: ${userInput}
 
-Respond as the astrologer and indicate if we should move to the next stage.`;
+Respond as Pandit Pradeep Kiradoo with wisdom and empathy.`;
 
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
@@ -187,38 +166,34 @@ Respond as the astrologer and indicate if we should move to the next stage.`;
           }
         ],
         temperature: 0.7,
-        max_tokens: 1000,
+        max_tokens: 1200,
+        top_p: 0.9,
       }),
     });
 
     if (!response.ok) {
-      throw new Error('Failed to get AI response');
+      throw new Error(`API Error: ${response.status}`);
     }
 
     const data = await response.json();
-    const aiMessage = data.choices[0].message.content;
+    return data.choices[0].message.content;
+  };
 
-    // Simple logic to update profile and stage based on AI response
-    const updatedProfile = { ...profile };
-    let newStage = stage;
+  const sendMessage = async () => {
+    if (!input.trim()) return;
 
-    // Extract information from user input
-    if (userInput.toLowerCase().includes('born') || userInput.toLowerCase().includes('birth')) {
-      if (userInput.match(/\d{1,2}\/\d{1,2}\/\d{4}/) || userInput.match(/\d{4}/)) {
-        updatedProfile.birthDate = userInput;
-      }
-    }
-
-    // Determine if we should move to analysis stage
-    if (chatHistory.length > 6 && stage === 'gathering') {
-      newStage = 'analysis';
-    }
-
-    return {
-      message: aiMessage,
-      updatedProfile,
-      newStage
+    const userMessage: ChatMessage = {
+      id: Date.now().toString(),
+      sender: 'user',
+      text: input,
+      timestamp: new Date().toLocaleTimeString()
     };
+
+    setMessages(prev => [...prev, userMessage]);
+    const currentInput = input;
+    setInput('');
+    
+    await processUserMessage(currentInput);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -340,6 +315,7 @@ Respond as the astrologer and indicate if we should move to the next stage.`;
             <div className="mt-3 text-center">
               <p className="text-sm text-blue-200/60">
                 Stage: <span className="capitalize text-blue-300">{consultationStage}</span> • 
+                Questions: {questionCount}/8 • 
                 Press Enter to send, Shift+Enter for new line
               </p>
             </div>
